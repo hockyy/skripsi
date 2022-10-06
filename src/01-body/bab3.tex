@@ -23,5 +23,14 @@ Melalui masukan pertanyaan, dilakukan studi literatur terhadap teknologi-teknolo
 \section{Metode dan Skenario Evaluasi}
 \label{sec:evaluasi}
 
+Dari observasi terhadap beberapa aplikasi \textit{real-time collaborative} lain, evaluasi pada penelitian ini menturutsertakan beberapa aspek esensial untuk setiap variasi dari aplikasi PeerToCP, antara lain ialah sebagai berikut.
+
+\begin{enumerate}
+    \item \textit{Correctness}, mengindikasikan kebenaran untuk setiap variasi implementasi PeerToCP. Aspek ini dipilih untuk menentukan bahwa setiap replika data yang dijaga kesamaannya berakhir konvergen dan identik.
+    \item \textit{Lightweight}, aplikasi berjalan dengan sumber daya atau \textit{resource} minimal dan tidak mengganggu jalannya aplikasi lain pada suatu sistem operasi. Suatu aplikasi hendaknya tidak menggunakan \textit{resource} yang berlebihan dalam mencapai tujuannya, hal ini dapat berdampak langsung terhadap minat penggunaan aplikasi ke depannya.
+    \item \textit{Responsiveness}, sinkronisasi replika data pada setiap klien dilakukan dalam latensi yang rendah dan layak guna. Setiap klien yang menggunakan suatu aplikasi \textit{real-time collaborative} seharusnya mendapatkan jeda minimal untuk memberikan pengalaman pengguna atau \textit{user experience} waktu nyata.
+    \item \textit{Local-First}, operasi diterapkan pada replika lokal secara langsung setelah diberikan pengguna tanpa perlu berhubungan dengan klien atau server lain di dalam jaringan.
+    \item \textit{Scalability}, aspek ini berhubungan langsung dengan setiap aspek lain, karena penggunaan arsitektur \textit{peer-to-peer} pada awalnya memiliki motivasi untuk meningkatkan ketersediaan layanan dengan mengurangi beban pada server. Performa dari aplikasi berpengaruh terhadap banyaknya klien atau pengguna dalam suatu jaringan, sehingga aspek ini penting untuk diperhatikan dalam sistem terdistribusi aplikasi~\citep{leibnitz2007peer}.
+\end{enumerate}
 
 Data kuantitatif dan kualitatif yang diperoleh pada proses \textit{benchmarking} ini akan dianalisis. Setelahnya, hasil analisis akan disimpulkan dengan memberikan kesempatan optimisasi dan pengembangan untuk penelitian-penelitian selanjutnya.
