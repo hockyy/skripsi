@@ -2,21 +2,23 @@
 \chapter{\babTiga}
 \label{bab:3} 
 
-Bab ini secara umum memaparkan tentang metodologi penelitian yang ditempuh dalam mengembangkan sistem PeerToCP. Lebih lanjut, akan mencakup mengenai pendekatan, rincian tahapan, yang termasuk desain sistem, serta metode evaluasi sistem.
+Bab ini secara umum memaparkan tentang metodologi penelitian yang ditempuh dalam mengembangkan sistem PeerToCP yang mencakup pendekatan, rincian tahapan, yang termasuk desain sistem, serta metode evaluasi sistem.
 
 \section{Pendekatan dan Tahapan Penelitian}
 
+Penelitian ini dilaksanakan dengan pendekatan \textit{experimental research}. Data kuantitatif dan kualitatif akan diukur untuk setiap variasi dari aplikasi PeerToCP yang memiliki implementasi \textit{business logic} di atas UI atau antarmuka pengguna yang sama. Variabel bebas dari penelitian ini difokuskan pada basis arsitektur dari jaringan PeerToCP serta metode resolusi dan sinkronisasi data yang digunakan. Variabel terikat yang akan diukur dari penelitian ini disusun berdasarkan aspek-aspek sistem. Data kuantitatif akan didapat dari hasil \textit{benchmarking} dan akan dianalisis. Data kualitatif akan didapatkan melalui paparan deskriptif secara objektif terhadap sistem. Bagan berikut memberikan gambaran besar tahapan penelitian yang dilaksanakan.
+
 \begin{figure}
     \centering
-    \includegraphics[scale=0.7]{assets/skripsi/MetodePenelitian.pdf}
+    \includegraphics[scale=0.7]{assets/skripsi/MetodePenelitian}
     \caption{Bagan Alur Penelitian}
-    \label{fig:my_label}
+    \label{bagan}
 \end{figure}
 
-\section{Desain Sistem}
+Perumusan masalah dalam penelitian ini dilatarbelakangi oleh potensi penggunaan teknologi web berupa WebRTC dan beberapa variasi algoritma sinkronisasi data dalam suatu jaringan terdistribusi yang memiliki keuntungan dan kerugiannya masing-masing. Ide ini dikembangkan pula melalui kebutuhan sistem yang mempermudah melakukan kegiatan pemrograman kompetitif, yaitu suatu IDE (\textit{Integrated Development Environment}) sederhana yang memungkinkan adanya pengembangan kode secara kolaboratif dalam waktu nyata dan penjalanan program yang dapat dilakukan pada suatu klien di dalam jaringan yang dapat diakses oleh setiap klien lain di dalam jaringan pula. Dari rumusan masalah tersebut, akan didapatkan pertanyaan-pertanyaan yang mendasari penelitian ini.
 
-\subsection{Kode dan Kompilasi}
+Melalui masukan pertanyaan, dilakukan studi literatur terhadap teknologi-teknologi dan penelitian terdahulu. Tahap ini menghasilkan landasan teori dan tinjauan pustaka sebagai dasar pengetahuan. Studi literatur dilakukan dengan membandingkan penelitian terkait yang serupa, dari segi performa, kerumitan implementasi, cara kerja, dan bukti kebenaran teknologi atau algoritma tertentu. Studi literatur ini berguna untuk mengetahui seberapa jauh kemajuan teknologi yang diteliti pada topik ini. Melalui studi literatur, penelitian dapat dilanjutkan dengan perancangan dan implementasi sistem aplikasi PeerToCP.
 
-Proses kompilasi merupakan proses mengonversi kode dari bahasa dengan level yang lebih tinggi dan dapat dimengerti oleh manusia menjadi kode biner yang dapat dimengerti oleh mesin. Pada penelitian ini, selain editor kode yang bersifat kolaboratif, proses kompilasi kode tunggal juga hendaknya dapat dilakukan oleh salah satu pengguna. Proses kompilasi ini membutuhkan kompilator yang terpasang pada suatu sistem operasi. 
+
 
 \section{Metode dan Skenario Evaluasi}
