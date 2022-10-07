@@ -2,16 +2,7 @@
 \chapter{\babEmpat}
 \label{bab:4}
 
-\section{Desain Sistem}
-
-\begin{figure}
-    \centering
-    \includegraphics[scale=0.5]{assets/skripsi/Activity_Diagram}
-    \caption{\textit{Activity Diagram} Alur Penggunaan Secara \textit{High Level}}
-    \label{fig:activity}
-\end{figure}
-
-Pada Gambar~\ref{fig:activity}, perilaku sinkronisasi \textit{shell-shell} program dan dokumen dilakukan tergantung dengan variasi implementasi dari program. Pada arsitektur \textit{client-server}, sistem aplikasi pengguna A akan berhubungan dan melakukan sinkronisasi dengan server. Sementara pada arsitektur \textit{peer-to-peer}, sistem aplikasi pengguna A akan berhubungan langsung dan melakukan sinkronisasi dengan \textit{peer} atau klien lain. Selain itu, permintaan dan transmisi pesan hasil kompilasi dilakukan melalui pengiriman pesan secara langsung pada arsitektur \textit{peer-to-peer}, namun harus melalui perantara server pada arsitektur \textit{client-server}. Detail implementasi dan arsitektur detail aplikasi akan dirincikan pada Bab~\ref{bab:4} Implementasi. Sistem yang telah dikembangkan kemudian akan dilakukan evaluasi secara objektif berdasarkan aspek-aspek tertentu yang menrepresentasikan performa dan skalabilitas aplikasi.
+Bab ini menjelaskan detail arsitektur dan implementasinya. Perbedaan dari performa aplikasi ini memberikan kesempatan untuk melakukan optimisasi desain sistem terdistribusi ke depannya. Detail parameter dan cara melakukan tolok ukur performa terhadap variasi aplikasi PeerToCP juga akan dipaparkan lebih lanjut dalam bab ini pada subbab~\ref{sec:desain_evaluasi} tentang desain evaluasi. Bab ini juga akan memberikan penjelasan singkat serta alasan pemilihan beberapa teknologi, termasuk \textit{library} dan \textit{modul} yang digunakan dalam implementasi aplikasi PeerToCP. Sebagai konteks, bagian awal dari bab ini menjelaskan mengenai teknologi yang digunakan untuk implementasi, diikuti dengan desain sistem serta detail sudut pandang pengguna terhadap \textit{usecase} aplikasi.
 
 \section{Aplikasi dan \textit{Framework} Terkait}
 
@@ -52,9 +43,21 @@ Node-pty merupakan \textit{library} Node.js yang memberikan antarmuka untuk mela
 
 Proses kompilasi merupakan proses mengonversi kode dari bahasa dengan level yang lebih tinggi dan dapat dimengerti oleh manusia menjadi kode biner yang dapat dimengerti oleh mesin. Pada penelitian ini, selain editor kode yang bersifat kolaboratif, proses kompilasi kode tunggal juga hendaknya dapat dilakukan oleh salah satu pengguna. Proses kompilasi ini membutuhkan kompilator yang terpasang pada suatu sistem operasi.
 
-\section{Tampilan Antarmuka dan Interaksi Aplikasi dengan Pengguna}
 
-Disini akan dijelaskan cara menggunakan aplikasi
+\section{Desain Sistem}
+
+Aplikasi PeerToCP didesain sebagai sebuah aplikasi \textit{desktop-based}, yang berarti dijalankan tidak melalui browser \textit{web}. Pilihan ini dikonsiderasi karena untuk mempermudah akses secara \textit{offline}, sehingga tidak dibutuhkan koneksi internet untuk mengakses aplikasi. Selain itu, fitur kompilasi pada suatu \textit{peer} memerlukan akses \textit{system-call} yang tidak disediakan pada API web-browser~\citep{v8, spidermonkey}. Hal ini ditetapkan agar \textit{script} yang dijalankan pada mesin browser tidak dapat menyerang komputer secara langsung. Berikut ialah \textit{diagram activity} yang menunjukkan garis besar penggunaan aplikasi.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{assets/skripsi/Activity_Diagram}
+    \caption{\textit{Activity Diagram} Alur Penggunaan Secara \textit{High Level}}
+    \label{fig:activity}
+\end{figure}
+
+Saat pengguna membuka aplikasi, pengguna akan diarahkan untuk masuk ke ruangan awal secara \textit{default}. Pengguna dapat melakukan operasi-operasi penyuntingan pada dokumen dan sinkronisasi dilakukan secara terus-menerus dengan \textit{publish-subscribe design pattern} sehingga memberikan respons tanpa perlu mengecek atau \textit{polling} secara terus menerus saat terjadi \textit{update} yang terjadi antarklien. \textit{Request} atau permintaan kompilasi dapat diajukan kepada klien mana pun pada jaringan, termasuk permintaan untuk klien ini sendiri. Aplikasi PeerToCP akan mencoba mengirimkan pesan kepada klien yang ditentukan tanpa mengabari tanpa intervesi dari klien lain dalam jaringan. Apabila permintaan berhasil diterima, sistem pada klien yang diminta akan melakukan proses kompilasi dan memasukkan \textit{shell} program berjalan dengan \texttt{id} tertentu ke daftar \textit{shell} yang dapat diakses ke setiap klien dalam jaringan. Daftar \textit{shell} dan kontennya ini disimpan dalam bentuk \textit{object} pada \textit{JavaScript}.
+
+Pada Gambar~\ref{fig:activity}, perilaku sinkronisasi \textit{shell-shell} program dan dokumen dilakukan tergantung dengan variasi implementasi dari program. Pada arsitektur \textit{client-server}, sistem aplikasi pengguna A akan berhubungan dan melakukan sinkronisasi dengan server. Sementara pada arsitektur \textit{peer-to-peer}, sistem aplikasi pengguna A akan berhubungan langsung dan melakukan sinkronisasi dengan \textit{peer} atau klien lain. Selain itu, permintaan dan transmisi pesan hasil kompilasi dilakukan melalui pengiriman pesan secara langsung pada arsitektur \textit{peer-to-peer}, namun harus melalui perantara server pada arsitektur \textit{client-server}. Detail implementasi dan arsitektur detail aplikasi akan dirincikan pada Bab~\ref{bab:4} Implementasi. Sistem yang telah dikembangkan kemudian akan dilakukan evaluasi secara objektif berdasarkan aspek-aspek tertentu yang menrepresentasikan performa dan skalabilitas aplikasi.
 
 \section{Arsitektur Peer-To-Peer}
 
@@ -73,3 +76,6 @@ Disini akan dijelaskan cara menggunakan aplikasi
     \caption{Arsitektur WebSocket-CRDT dan WebSocket-OT Secara Berurutan}
 \end{figure}
 
+
+\section{Desain Evaluasi}
+\label{sec:desain_evaluasi}
