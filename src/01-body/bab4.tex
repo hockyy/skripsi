@@ -37,22 +37,34 @@ Saat pengguna membuka aplikasi, pengguna akan diarahkan untuk masuk ke ruangan a
 
 Pada Gambar~\ref{fig:activity}, perilaku sinkronisasi \textit{shell-shell} program dan dokumen dilakukan tergantung dengan variasi implementasi dari program. Pada arsitektur \textit{client-server}, sistem aplikasi pengguna A akan berhubungan dan melakukan sinkronisasi dengan server. Sementara pada arsitektur \textit{peer-to-peer}, sistem aplikasi pengguna A akan berhubungan langsung dan melakukan sinkronisasi dengan \textit{peer} atau klien lain. Selain itu, permintaan dan transmisi pesan hasil kompilasi dilakukan melalui pengiriman pesan secara langsung pada arsitektur \textit{peer-to-peer}, namun harus melalui perantara server pada arsitektur \textit{client-server}. Detail implementasi dan arsitektur detail aplikasi akan dirincikan pada Bab~\ref{bab:4} Implementasi. Sistem yang telah dikembangkan kemudian akan dilakukan evaluasi secara objektif berdasarkan aspek-aspek tertentu yang menrepresentasikan performa dan skalabilitas aplikasi.
 
-\section{Arsitektur Peer-To-Peer}
+\section{CRDT (\textit{Conflict-Free Replicated Data Type}) Berbasis Peer-To-Peer}
 
 \begin{figure}
     \centering
     \includegraphics[scale=0.6]{assets/skripsi/Arsitektur_WebRTC_CRDT}
-    \caption{Arsitektur WebRTC-CRDT}
+    \caption{Arsitektur yang Menggunakan WebRTC dengan \textit{WebSocket Signalling} dan CRDT}
 \end{figure}
 
-\section{Arsitektur Client-Server}
+\section{Metode \textit{Operational Transformation} Berbasis \textit{Client-Server}}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.42]{assets/skripsi/Arsitektur_WebSocket_OT}
+    \caption{Arsitektur yang Menggunakan WebSocket dan \textit{Operational Transformation}}
+\end{figure}
+
+Untuk suatu dokumen yang hanya menyimpan teks biasa (\textit{plain text}), operasi \textit{operational transformation} dapat diimplementasi dengan sederhana. Algoritma bekerja dengan menyimpan sebuah \textit{array} perubahan lokal yang belum diketahui oleh server. Perubahan-perubahan lokal beserta versi dokumen yang dapat disimpulkan dari banyaknya perubahan yang sudah dilakukan dari awal dokumen akan dikirimkan secara berkala dengan mekanisme RPC over WebSocket. Mekanisme ini pada dasarnya mengizinkan alur \textit{non-blocking} dalam menunggu balasan sebelum mengirimkan percobaan pengiriman perubahan lainnya. Apabila versi dasar dari server lebih baru daripada versi lokal, maka pengiriman perubahan akan ditolak, dan server akan memberikan respons kepada klien tersebut untuk melakukan \textit{rebase} atau menambahkan \textit{update} yang terdapat di server terlebih dahulu sebelum dapat mengirim percobaan pengiriman lagi.
+
+Perubahan \textit{remote} yang diterima dari server akan ditransformasikan satu sama lain dengan perubahan lokal yang belum diketahui oleh server. Perubahan lokal akan ditimpa dengan perubahan yang sudah ditransformasikan dengan perubahan \textit{remote}. Percobaan pengiriman yang dikirim selanjutnya akan mengikuti perubahan yang sudah ditransformasikan ini. \textit{Operational transformation} hanya terjadi di lokal dan perubahan akan diperbarui secara seri, sehingga setiap dokumen dalam jaringan memiliki replika yang berujung identik dan konvergen.
+
+\section{CRDT (\textit{Conflict-Free Replicated Data Type}) Berbasis \textit{Client-Server}}
 
 \begin{figure}
     \centering
     \includegraphics[scale=0.42]{assets/skripsi/Arsitektur_WebSocket_CRDT}
-    \includegraphics[scale=0.42]{assets/skripsi/Arsitektur_WebSocket_OT}
-    \caption{Arsitektur WebSocket-CRDT dan WebSocket-OT Secara Berurutan}
+    \caption{Arsitektur yang Menggunakan WebSocket dan \textit{CRDT}}
 \end{figure}
+
 
 \section{Desain Evaluasi}
 \label{sec:desain_evaluasi}
