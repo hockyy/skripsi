@@ -51,11 +51,15 @@ Pada Gambar~\ref{fig:activity}, perilaku sinkronisasi \textit{shell-shell} progr
     \centering
     \includegraphics[scale=0.42]{assets/skripsi/Arsitektur_WebSocket_OT}
     \caption{Arsitektur yang Menggunakan WebSocket dan \textit{Operational Transformation}}
+    \label{fig:websocket_ot}
 \end{figure}
 
 Untuk suatu dokumen yang hanya menyimpan teks biasa (\textit{plain text}), operasi \textit{operational transformation} dapat diimplementasi dengan sederhana. Algoritma bekerja dengan menyimpan sebuah \textit{array} perubahan lokal yang belum diketahui oleh server. Perubahan-perubahan lokal beserta versi dokumen yang dapat disimpulkan dari banyaknya perubahan yang sudah dilakukan dari awal dokumen akan dikirimkan secara berkala dengan mekanisme RPC over WebSocket. Mekanisme ini pada dasarnya mengizinkan alur \textit{non-blocking} dalam menunggu balasan sebelum mengirimkan percobaan pengiriman perubahan lainnya. Apabila versi dasar dari server lebih baru daripada versi lokal, maka pengiriman perubahan akan ditolak, dan server akan memberikan respons kepada klien tersebut untuk melakukan \textit{rebase} atau menambahkan \textit{update} yang terdapat di server terlebih dahulu sebelum dapat mengirim percobaan pengiriman lagi.
 
 Perubahan \textit{remote} yang diterima dari server akan ditransformasikan satu sama lain dengan perubahan lokal yang belum diketahui oleh server. Perubahan lokal akan ditimpa dengan perubahan yang sudah ditransformasikan dengan perubahan \textit{remote}. Percobaan pengiriman yang dikirim selanjutnya akan mengikuti perubahan yang sudah ditransformasikan ini. \textit{Operational transformation} hanya terjadi di lokal dan perubahan akan diperbarui secara seri, sehingga setiap dokumen dalam jaringan memiliki replika yang berujung identik dan konvergen.
+
+Hal yang serupa diterapkan pula untuk \textit{shell} program yang berjalan. Saat suatu klien memberikan \textit{keystroke} pada salah satu \textit{shell} yang aktif, \textit{keystroke} akan dikirimkan melalui RPC yang serupa, namun akan diarahkan ke klien yang menjadi \textit{host} atau menjalankan programnya. Selanjutnya, perubahan \textit{shell} akan dikirimkan berkala pada server selama ada perubahan yang belum diterima atau diketahui server. Saat terjadi perubahan, server akan melakukan pengumuman untuk memberitahu kepada setiap klien untuk melakukan \textit{pull}.
+Karena respons \textit{shell} tergantung pada klien \textit{host}, maka pembaharuan tidak perlu diterapkan transformasi. Mekanisme \textit{update} yang dilaksanakan secara serial ini diterapkan untuk mencegah terjadinya \textit{race condition} pada saat gangguan jaringan.
 
 \section{CRDT (\textit{Conflict-Free Replicated Data Type}) Berbasis \textit{Client-Server}}
 
