@@ -5,6 +5,8 @@
 Bab ini membahas latar belakang perkembangan teknologi komunikasi waktu nyata, aplikasinya di internet pada saat ini, serta tantangan dan hambatan perkembangan teknologi ini untuk dapat digunakan secara komersial bagi publik. Melalui latar belakang, disusun gagasan pengembangan dan implementasi sederhana sistem aplikasi yang memanfaatkan teknologi tersebut. Ada pula tujuan, manfaat, serta batasan penulisan untuk memberikan konteks visi, misi, dan lingkup pengembangan yang turut disampaikan pada bab ini.
 
 %-----------------------------------------------------------------------------%
+
+
 \section{Latar Belakang}
 \label{sec:latarBelakang}
 %-----------------------------------------------------------------------------%
@@ -25,32 +27,40 @@ Kedua arsitektur, yakni \textit{client-server} dan \textit{peer-to-peer} memilik
 Editor kode kolaboratif lebih lanjut dapat dikembangkan menjadi suatu \textit{environment} yang membolehkan kolaborasi untuk digunakan dalam pemrograman kompetitif. Pemrograman kompetitif merupakan cabang olahraga pemrograman yang diperlombakan secara individu atau berkelompok untuk mengerjakan soal komputasional dengan batasan waktu dan memori tertentu. Pada pemrograman kompetitif, kode yang diedit umumnya bersifat sebuah berkas tunggal (\textit{single file}), yang dapat dikompilasi atau dijalankan tersendiri. Beberapa bahasa yang umum digunakan antara lain C, C++, Python, dan Java. Penelitian ini akan membahas pengembangan sebuah aplikasi editor kode, akses kompilator, dan \textit{shell} kolaboratif yang mendukung fitur pemrograman bersama dalam waktu nyata untuk setiap klien dalam sebuah jaringan. Penelitian ini juga menunjukkan hasil analisis \textit{benchmarking} performa PeerToCP yang menggunakan metode resolusi \textit{operational transformation} berbasis \textit{client-server}, struktur data CRDT berbasis arsitektur \textit{peer-to-peer}, serta struktur data CRDT pula, namun berbasis \textit{client-server}.
 
 %-----------------------------------------------------------------------------%
+
+
 \section{Pertanyaan Penelitian}
 \label{sec:definisiMasalah}
 %-----------------------------------------------------------------------------%
 Berdasarkan paparan latar belakang dan rumusan masalah yang disampaikan, berikut adalah pertanyaan-pertanyaan yang hendak dijawab dari penelitian.
 
 \begin{enumerate}[noitemsep]
-	\item Bagaimana implementasi dari beberapa variasi aplikasi PeerToCP yang merupakan \textit{Local First Real-Time Collaborative Code Editor}?
+    \item Bagaimana implementasi dari beberapa variasi aplikasi PeerToCP yang merupakan \textit{Local First Real-Time Collaborative Code Editor}?
     \item Bagaimana perbandingan performanya dan metrik evaluasi apa saja yang diukur untuk berbagai macam operasi penyuntingan kode, pengajuan kompilasi, dan pemanggilan program?
 \end{enumerate}
 
 %-----------------------------------------------------------------------------%
+
+
 \section{Batasan Penelitian}
 \label{sec:batasanMasalah}
 %-----------------------------------------------------------------------------%
 Pertanyaan penelitian yang disampaikan pada subbab sebelumnya dibatasi oleh beberapa batasan penelitian. Pembatasan ini untuk memberikan kejelasan cakupan dan jangkauan penelitian yang disampaikan dalam karya ini. Dalam penelitian ini, \textit{user interface} dan \textit{user experience} dari bagian tampilan aplikasi tidak akan diuji dengan metode interaksi manusia dan komputer. PeerToCP masih menggunakan \textit{library}, modul, dan \textit{framework} yang sudah tersedia dengan modifikasi dan penyesuaian seperlunya dalam proses pengembangan sistem aplikasi. Untuk setiap variasi PeerToCP, terdapat beberapa perbedaan fitur dan perilaku minor (tidak signifikan terhadap operasi yang akan dievaluasi) yang diabaikan.
 
 %-----------------------------------------------------------------------------%
+
+
 \section{Tujuan Penelitian}
 \label{sec:tujuan}
 %-----------------------------------------------------------------------------%
 Terlepas dari batasan dan cakupannya, penelitian ini bertujuan untuk mewujudkan potensi dari teknologi \textit{real-time communications} yakni WebSocket dan WebRTC dalam bentuk aplikasi PeerToCP, sebuah \textit{environment} pemrograman kompetitif kolaboratif \textit{real-time}. Bersama tujuan tersebut, detail implementasi akan dipaparkan secara detail untuk menerangkan hambatan dan solusi yang diambil dalam pengembangan aplikasi ini. Penelitian ini juga akan menunjukkan evaluasi perbandingan variasi implementasi dari PeerToCP dengan uji skenario berbagai operasi esensial yang dapat dilakukan.
 
+
 \section{Manfaat Penelitian}
 \label{sec:manfaat}
 %-----------------------------------------------------------------------------%
 Penelitian ini diharapkan dapat memberikan gambaran umum dan bentuk prototipe dasar beberapa teknologi \textit{real-time communication}, seperti teknologi WebRTC (\textit{Web Real-Time Communication}) dan beberapa metode resolusi sinkronisasi replika data dalam beberapa klien dalam sebuah jaringan. Lebih lanjut, aplikasi ini berpotensi untuk dikembangkan lebih lanjut ke tahap produksi dan digunakan secara komersial. Penelitian ini juga didesain untuk menjadi acuan dalam penelitian tolok ukur lain terkait dengan performa arsitektur yang digunakan terhadap beberapa operasi komunikasi data tertentu, terutama dalam bentuk kolaborasi penyuntingan teks dan sinkronisasi data waktu nyata. Berangkat dari tujuan penelitian yang disampaikan sebelumnya pula, beberapa permasalahan dan hambatan pengembangan yang dipaparkan dapat diteliti lebih lanjut untuk membuat alternatif solusi yang lebih optimal terhadap solusi yang disampaikan pada penelitian ini.
+
 
 \section{Sistematika Penulisan}
 
