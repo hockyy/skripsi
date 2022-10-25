@@ -4,6 +4,7 @@
 
 Bab ini menjelaskan detail arsitektur dan implementasinya. Perbedaan dari performa aplikasi ini memberikan kesempatan untuk melakukan optimisasi desain sistem terdistribusi ke depannya. Detail parameter dan cara melakukan tolok ukur performa terhadap variasi aplikasi PeerToCP juga akan dipaparkan lebih lanjut dalam bab ini. Bab ini juga memberikan penjelasan singkat serta alasan pemilihan beberapa teknologi, termasuk \textit{library} dan \textit{modul} yang digunakan dalam implementasi aplikasi PeerToCP. Sebagai konteks, bagian awal dari bab ini menjelaskan mengenai teknologi yang digunakan untuk implementasi, diikuti dengan desain sistem serta detail sudut pandang pengguna terhadap \textit{usecase} aplikasi.
 
+
 \section{\textit{Library} dan \textit{Framework} Terkait}
 
 Terdapat beberapa aplikasi dan \textit{library} yang terkait dalam pengembangan sistem aplikasi PeerToCP yang dibahas dalam penelitian ini. Berbagai \textit{framework}, \textit{library}, dan sistem modul ini merupakan hasil penelitian oleh para pengembang sebelumnya. Pemilihan penggunaan untuk setiap teknologi ini dipertimbangkan dengan alasan tertentu, salah satunya adalah Electron, yang menjadi basis pengembangan aplikasi \textit{desktop}.
@@ -24,6 +25,7 @@ Untuk memenuhi komponen penjalanan program yang dapat diakses oleh setiap klien 
 
 Node-pty merupakan \textit{library} Node.js yang memberikan antarmuka untuk melakukan \textit{fork} proses dengan deskriptor berkas \textit{pseudoterminal}. Node-pty mengizinkan adanya aliran data untuk baca dan tulis dengan proses berjalan pada kernel. Node-pty berguna untuk menjalankan berkas hasil kompilasi yang bersifat CLI (\textit{Command Line Interface}) yang tidak memiliki tampilan grafik untuk pengguna. Node-pty dipilih karena banyak digunakan dan bersifat \textit{cross-platform} mendukung sistem operasi Windows, GNU/Linux, dan MacOS. Aplikasi ini juga membutuhkan bagian \textit{frontend} untuk menampilkannya, dan digunakan Xterm.js. \textit{Library} ini merupakan salah satu komponen yang menampilkan terminal melalui bahasa yang dapat diolah oleh web. Xterm.js memiliki antarmuka yang bisa menerima dan meneruskan data dari peramban (\textit{browser}) yang dapat dihubungkan dengan sebuah proses berjalan pada sistem. Xterm.js dikembangkan tanpa memerlukan dependensi, sehingga dipilih dalam pengembangan sistem ini.
 
+
 \section{Desain Sistem}
 
 Aplikasi PeerToCP didesain sebagai sebuah aplikasi \textit{desktop-based}, yang berarti dijalankan tidak melalui browser \textit{web}. Pilihan ini dikonsiderasi karena untuk mempermudah akses secara \textit{offline}, sehingga tidak dibutuhkan koneksi internet untuk mengakses aplikasi. Selain itu, fitur kompilasi pada suatu \textit{peer} memerlukan akses \textit{system-call} yang tidak disediakan pada API web-browser~\citep{v8, spidermonkey}. Hal ini ditetapkan agar \textit{script} yang dijalankan pada mesin browser tidak dapat menyerang komputer secara langsung. Berikut ialah \textit{diagram activity} yang menunjukkan garis besar penggunaan aplikasi.
@@ -38,6 +40,7 @@ Aplikasi PeerToCP didesain sebagai sebuah aplikasi \textit{desktop-based}, yang 
 Saat pengguna membuka aplikasi, pengguna akan diarahkan untuk masuk ke ruangan awal secara \textit{default}. Pengguna dapat melakukan operasi-operasi penyuntingan pada dokumen dan sinkronisasi dilakukan secara terus-menerus dengan \textit{publish-subscribe design pattern} sehingga memberikan respons tanpa perlu mengecek atau \textit{polling} secara terus menerus saat terjadi \textit{update} yang terjadi antarklien. \textit{Request} atau permintaan kompilasi dapat diajukan kepada klien mana pun pada jaringan, termasuk permintaan untuk klien ini sendiri. Aplikasi PeerToCP akan mencoba mengirimkan pesan kepada klien yang ditentukan tanpa mengabari tanpa intervesi dari klien lain dalam jaringan. Apabila permintaan berhasil diterima, sistem pada klien yang diminta akan melakukan proses kompilasi dan memasukkan \textit{shell} program berjalan dengan ID tertentu ke daftar \textit{shell} yang dapat diakses ke setiap klien dalam jaringan. Daftar \textit{shell} dan kontennya ini disimpan dalam bentuk \textit{object} pada \textit{JavaScript}.
 
 Pada Gambar~\ref{fig:activity}, perilaku sinkronisasi \textit{shell-shell} program dan dokumen dilakukan tergantung dengan variasi implementasi dari program. Pada arsitektur \textit{client-server}, sistem aplikasi pengguna A akan berhubungan dan melakukan sinkronisasi dengan server. Sementara pada arsitektur \textit{peer-to-peer}, sistem aplikasi pengguna A akan berhubungan langsung dan melakukan sinkronisasi dengan \textit{peer} atau klien lain. Selain itu, permintaan dan transmisi pesan hasil kompilasi dilakukan melalui pengiriman pesan secara langsung pada arsitektur \textit{peer-to-peer}, namun harus melalui perantara server pada arsitektur \textit{client-server}.
+
 
 \section{CRDT (\textit{Conflict-Free Replicated Data Type}) Berbasis \textit{Peer-To-Peer} dan \textit{Client-Server}}
 \label{sec:desain_crdt}
@@ -58,6 +61,7 @@ CRDT pada dua skenario arsitektur dalam penelitian ini menggunakan library CRDT 
 
 Perbedaan antara kedua implementasi arsitektur CRDT ini terdapat pada \textit{provider} atau penyedia jaringannya. Pada arsitektur \textit{client-server}, penelitian ini menggunakan \textit{library} YWebSocket yang telah dimodifikasi pula untuk dapat mengirim pesan kepada klien lain tertentu dalam sebuah jaringan melalui server. Penyedia jaringan pada dasarnya memberikan abstraksi bagi setiap \textit{peer} atau klien dalam sebuah jaringan terdistribusi untuk berhubungan satu sama lain. Terdapat fitur tambahan bagi server pada arsitektur ini untuk dapat melakukan persistensi data. Persistensi ini mengizinkan untuk server menyimpan salah satu replika dari dokumen, sehingga dokumen masih akan tetap ada walaupun tidak ada klien yang terhubung. Selain menggunakan CRDT, arsitektur \textit{client-server} juga dapat digunakan bersamaan dengan metode \textit{operational transformation} untuk menjaga identitas replika dalam suatu jaringan terdistribusi. Dalam penelitian ini, variasi PeerToCP dengan \textit{operational transformation} yang hanya memenuhi \textit{Transformation Property 1} akan diujikan pula.
 
+
 \section{Metode \textit{Operational Transformation} Berbasis \textit{Client-Server}}
 \label{sec:design_ot}
 
@@ -74,5 +78,20 @@ Perubahan \textit{remote} yang diterima dari server akan ditransformasikan satu 
 
 Hal yang serupa diterapkan pula untuk \textit{shell} program yang berjalan. Saat suatu klien memberikan \textit{keystroke} pada salah satu \textit{shell} yang aktif, \textit{keystroke} akan dikirimkan melalui RPC yang serupa, namun akan diarahkan ke klien yang menjadi \textit{host} atau menjalankan programnya. Selanjutnya, perubahan \textit{shell} akan dikirimkan berkala pada server selama ada perubahan yang belum diterima atau diketahui server. Saat terjadi perubahan, server akan melakukan pengumuman untuk memberitahu kepada setiap klien untuk melakukan \textit{pull}. Karena respons \textit{shell} tergantung pada klien \textit{host}, maka pembaharuan tidak perlu diterapkan fungsi transformasi seperti pada OT teks biasa. Salah satu aspek lainnya ialah \textit{position mapping} yang tidak perlu ditangani karena kursor akan selalu berada di sebelah kanan karakter terakhir. Operasi seperti mekanisme \textit{update} yang dilaksanakan secara serial ini diterapkan untuk mencegah terjadinya \textit{race condition} pada saat gangguan jaringan.
 
+Beragam arsitektur yang sudah dipaparkan pada subbab-subbab sebelummya merupakan bagian \textit{backend} dari suatu antarmuka editor yang sama, sehingga penilaian secara \textit{end-to-end} yang akan dirasakan oleh pengguna menjadi tolok ukur yang logis dalam penelitian ini. Tolok ukur ini terdiri dari kasus yang mempertimbangkan aspek-aspek yang hendak diuji. Evaluasi dilakukan secara adil dan perlakuan kontrol yang diusahakan identik untuk dapat mencakup variabel yang hendak diukur secara kuantitatif.
+
+
 \section{Desain Evaluasi}
 \label{sec:desain_evaluasi}
+
+Evaluasi sistem akan dilakukan dengan layanan Compute Engine Google Cloud Platform. Setiap variasi memiliki server yang di-\textit{deploy} pada \textit{instance} dengan zona daerah \texttt{asia-southeast1-b}, menggunakan mesin bertipe \texttt{e2-medium} yang memiliki 2 vCPUs dan memori RAM 4GiB, serta sistem operasi Debian 11. Alasan dipilihnya mesin dengan tipe ini adalah untuk menghindari proses \textit{benchmarking} atau tolok ukur yang dibatasi oleh spesifikasi sistem. Dalam penelitian ini, \textit{relay server} tidak disediakan untuk \textit{peer} yang tidak dapat terhubung satu sama lain dalam sebuah jaringan \textit{peer-to-peer}, penelitian ini mengasumsikan hal tersebut tidak terjadi. Selain itu, terdapat \textit{virtual machine} yang mewakili pengguna menggunakan mesin bertipe \texttt{e2-small} yang memiliki 2 vCPUs, memori Ram 2GiB, dan sistem operasi Debian 11 pula. Mesin pengguna ini akan di-\textit{deploy} pada \textit{zone} yang berbeda-beda sesuai dengan skenario eksperimennya.
+
+\subsection{Aspek \textit{Correctness}}
+
+Aspek \textit{Correctness} dari sistem secara praktis akan disimulasikan melalui serangkaian operasi-operasi tertentu terhadap editor teks. Terdapat empat macam operasi yang akan dilakukan dalam periode dua menit sebanyak lima kali, yaitu:
+
+\begin{enumerate}
+    \item operasi \texttt{insert} suatu \textit{string} karakter ASCII acak dengan panjang antara 6 hingga 10 secara inklusif;
+    \item operasi \texttt{delete} suatu \textit{range} dengan panjang antara 6 hingga 10 secara inklusif;
+    \item \textit{disconnect}
+\end{enumerate}
