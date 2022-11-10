@@ -2,11 +2,39 @@
 \chapter{\babLima}
 \label{bab:5}
 
-Bab ini membahas mengenai hasil dan analisis dari evaluasi yang telah dilaksanakan berdasarkan skenario-skenario yang telah disusun pada bab sebelumnya. Pembahasan analisis akan dibagikan berdasarkan aspek-aspek yang telah disusun untuk memberikan gambaran yang lebih jelas mengenai performa program dan \textit{resource} atau sumber daya yang dibutuhkan untuk mencapai performa tersebut. Selain itu, bab ini juga akan membahas pertimbangan variasi dari PeerToCP yang lebih baik digunakan dan faktor-faktor yang memengaruhi pertimbangan tersebut. Melalui pertimbangan tersebut, kelemahan dari sistem aplikasi akan disampaikan pula untuk perkembangan ke depannya.
+Bab ini membahas mengenai hasil dan analisis dari evaluasi yang telah dilaksanakan berdasarkan skenario-skenario yang telah disusun pada bab sebelumnya. Pembahasan analisis akan dibagikan berdasarkan aspek-aspek yang telah disusun untuk memberikan gambaran yang lebih jelas mengenai performa program dan \textit{resource} atau sumber daya yang dibutuhkan untuk mencapai performa tersebut. Selain itu, bab ini juga akan membahas pertimbangan variasi dari PeerToCP yang lebih baik digunakan dan faktor-faktor yang memengaruhi pertimbangan tersebut. Melalui pertimbangan tersebut, kelemahan dari sistem aplikasi turut disampaikan untuk perkembangan ke depannya.
 
-\section{Evaluasi \textit{Resource} Aplikasi}
+\section{Aspek \textit{Local-First} dan \textit{Correctness}}
 
-Berdasarkan eksperimen yang dilakukan, setiap variasi dari PeerToCP menghasilkan nilai cacahan yang sama untuk setiap skenarionya. Namun pada skenario pertama dengan 8 klien pada variasi Operational Transformation yang berbasis \textit{Client-Server} dapat terjadi pemutusan hubungan \textit{disconnection} yang tidak dapat terhubung kembali karena \textit{bandwidth} koneksi internet yang berada di luar batas \textit{environment} pengujian. Hal ini disebabkan karena pada saat operasi \textit{update}, ukuran \textit{update} terlalu besar untuk dapat ditangani oleh server, sehingga penerimaan data yang dilakukan melalui koneksi \textit{WebSocket} mengalami \texti{timeout} saat terjadi \textit{update} pada beberapa mesin secara bersamaan. Skenario dengan jumlah klien ini diulang hingga tiga kali eksperimen, dan dalam setiap eksperimen tersebut, satu hingga dua klien yang dilakukan tidak dapat terhubung kembali. Perhatikan bahwa pada eksperimen, waktu pemutusan hubungan  dilakukan secara acak dalam periode durasi yang sama untuk setiap kliennya seperti yang dijelaskan pada bab sebelumnya.
+Kedua aspek ini tidak dapat dipisahkan satu sama lain, pada skenario pertama dan kedua, aspek \textit{local-first} diuji dengan mensimulasikan proses pemutusan koneksi secara acak pada klien, sementara data terus diubah oleh setiap pengguna lokal. Berdasarkan eksperimen secara langsung, proses perubahan ini terjadi secara \textit{local-first}, yang berarti perubahan lokal dapat terus dilakukan dan langsung diterapkan meskipun klien sedang tidak berada dalam jaringan, dan ketika terjadi proses masuk kembali ke jaringan, data akan diperbaharui secara sesuai dengan perubahan yang dilakukan.
+
+Berdasarkan eksperimen yang dilakukan, setiap variasi dari PeerToCP menghasilkan nilai cacahan yang sama untuk setiap skenarionya, yang berarti setiap dokumen berada pada kondisi atau \textit{state} akhir yang sama. Namun pada skenario pertama dengan 8 klien pada variasi Operational Transformation yang berbasis \textit{Client-Server}, dapat terjadi pemutusan hubungan \textit{disconnection} yang tidak dapat terhubung kembali karena \textit{bandwidth} koneksi internet yang berada di luar batas \textit{environment} pengujian.
+
+Skenario dengan jumlah klien ini diulang hingga tiga kali eksperimen, dan dalam setiap eksperimen tersebut, satu hingga dua klien tidak dapat terhubung kembali. Perhatikan bahwa pada eksperimen, waktu pemutusan hubungan dilakukan secara acak dalam periode durasi yang sama untuk setiap kliennya seperti yang dijelaskan pada bab sebelumnya. Hal ini ditunjukkan secara lebih detail pada grafik transmisi data yang masuk melalui jaringan pada klien pertama dan klien kedua untuk setiap variasi aplikasi dalam skenario pertama ini.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=13cm]{./assets/skripsi/p2cp_cell_2_output_26}
+ \caption{Grafik Perbandingan Jaringan pada Klien Pertama dan Klien Kedua untuk $n = 8$}
+ \label{fig:2-26}
+\end{figure}
+
+Pada saat operasi \textit{update} dilakukan tepat setelah koneksi terhubung kembali, ukuran \textit{update} cenderung lebih besar karena sudah terkumpul dari beberapa operasi yang terjadi selama klien sedang berada di luar jaringan. Ketika \textit{update} ini dilakukan, server sedang dalam keadaan berbagai klien lain yang hendak mengirimkan \textit{update}. Karena hal tersebut, algoritma \textit{operational transformation} yang hanya membolehkan suatu \textit{update} untuk dilakukan apabila versi terbaru yang sama sudah dimiliki oleh klien akan meminta klien untuk melakukan \textit{update}. Sementara tumpukan \textit{push update} berukuran besar terus dikirimkan hal ini akan memenuhi \textit{bandwidth} server, yang dapat dilihat pada grafik berikut.
+
+Perhatikan bahwa pada Gambar~\ref{fig:2-26}, menunjukkan klien pertama yang mengalami pemutusan jaringan pada detik ke-72 dan penghubungan kembali pada detik ke-102, terjadi pengiriman data yang cukup besar selama kurang lebih 20 detik. Begitu pula dengan klien kedua yang mengalami pemutusan jaringan pada sekitar detik ke-60 dan penghubungan kembali pada detik ke-90. Sesaat setelah suatu klien terhubung kembali ke suatu jaringan, akan terjadi \textit{spike} pada jaringan yang cukup besar. Pada jumlah pengguna yang cukup banyak dalam satu dokumen, pemutusan dan penghubungan jaringan yang secara sengaja dilakukan pada waktu yang serupa dapat menyebabkan ketidakandalan pada sistem ini. Grafik untuk server ditunjukkan pada gambar berikut.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=15cm]{./assets/skripsi/p2cp_cell_2_output_23}
+ \caption{Grafik Perbandingan Penerimaan Data pada Setiap Variasi Server PeerToCP}
+ \label{fig:2-23}
+\end{figure}
+
+Lalu lintas jaringan pada server variasi \textit{operational transformation} dengan arsitektur \textit{client-server} dapat mencapai lebih dari 800000 \textit{kilobits}/detik atau setara dengan 100 \textit{megabytes}/detik, sementara untuk skenario yang serupa, transmisi data pada server dengan variasi CRDT berarsitektur \textit{client-server} lebih hemat sekitar 950 kali. Melalui Gambar~\ref{fig:2-26}, diketahui bahwa mean transmisi jaringannya sekitar 80 kali lebih sedikit dibandingkan CRDT \textit{peer-to-peer} serta 950 kali lebih sedikit dibandingkan CRDT \textit{client-server}.
+
+Pada skenario pertama ini, terlihat bahwa variasi PeerToCP yang menggunakan CRDT lebih dapat diandalkan karena paralelitas \textit{update} yang dilakukan terhadap dokumen. Faktor-faktor lain yang memengaruhi variasi CRDT yang lebih baik juga tidak menutup kemungkinan dari segi implementasi \textit{provider websocket} yang digunakan, teknik kompresi dan \textit{encoding} yang diterapkan, serta efek bola salju yang ditimbulkan akibat \textit{update} berukuran besar yang terus dikirimkan menjadi tertumpuk dan selalu terlambat dibandingkan \textit{update} lain dan menyangkut aspek selanjutnya yang akan dibahas, yaitu \textit{Scalability} dan \textit{Responsiveness}.
+
+\section{Aspek \textit{Scalability} dan \textit{Responsiveness}}
 
 \begin{table}[H]
  \centering
