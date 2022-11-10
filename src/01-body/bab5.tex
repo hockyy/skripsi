@@ -2,8 +2,51 @@
 \chapter{\babLima}
 \label{bab:5}
 
-\section{Evaluasi Subjektif Performa Aplikasi}
+\section{Evaluasi \textit{Resource} Aplikasi}
 
+\begin{table}[H]
+ \centering
+
+ \caption{Deskripsi Statistik Aktivitas dan \textit{Resource Server} pada Skenario Pertama}
+\begin{tabular}{|cc|r|r|r|}
+\hline
+\multicolumn{2}{|c|}{$\boldsymbol{n}$} & \multicolumn{1}{c|}{\textbf{2}} & \multicolumn{1}{c|}{\textbf{4}} & \multicolumn{1}{c|}{\textbf{8}} \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Peer-To-Peer}}} & CPU & 0.01 & 0.02 & 0.10 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & RAM & 0.67 & -0.03 & 0.40 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net In & 10.72 & 14.81 & 60.72 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net Out & -10.24 & -15.79 & -83.11 \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Client Server}}} & CPU & 0.93 & 1.29 & 1.68 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & RAM & 5.01 & 6.83 & 9.54 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net In & 73.26 & 176.64 & 324.19 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net Out & -71.79 & -193.90 & -391.66 \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{OT Client Server}}} & CPU & 4.85 & 14.18 & 24.33 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & RAM & 30.92 & 41.88 & 69.99 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net In & 52318.08 & 167768.04 & 308540.87 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net Out & -26494.76 & -84932.31 & -156178.28 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+ \centering
+ \caption{Deskripsi Statistik Aktivitas dan \textit{Resource} Klien atau \textit{Peers} pada Skenario Pertama}
+
+\begin{tabular}{|cc|r|r|r|}
+\hline
+\multicolumn{2}{|c|}{$n$} & \multicolumn{1}{c|}{\textbf{2}} & \multicolumn{1}{c|}{\textbf{4}} & \multicolumn{1}{c|}{\textbf{8}} \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Peer-To-Peer}}} & CPU & 39.1964893 & 60.13947488 & 62.2870496 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & RAM & 16.57856816 & 19.24442935 & 21.30499303 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net In & 28.5230253 & 96.16536701 & 229.4788353 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net Out & -28.03809012 & -93.97903876 & -223.6266535 \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Client Server}}} & CPU & 33.96390498 & 57.38616741 & 56.89049428 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & RAM & 14.92823532 & 19.12934751 & 20.94699478 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net In & 19.46582482 & 27.68880062 & 30.96869733 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net Out & -19.76281471 & -21.21326889 & -18.73440885 \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{OT Client Server}}} & CPU & 47.79374975 & 73.29454876 & 65.25737338 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & RAM & 25.9460194 & 31.17265199 & 36.33549154 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net In & 62.24127487 & 99.81376692 & 87.42216719 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net Out & -12962.04576 & -28872.47276 & -18344.14905 \\ \hline
+\end{tabular}
+\end{table}
 
 \section{Evaluasi Latensi}
 
@@ -12,14 +55,13 @@
 \begin{table}[H]
  \centering
  \caption{Deskripsi Statistik Latensi Skenario Ketiga dalam ms}
-\begin{tabular}{|c|ccccccccc|}
+\begin{tabular}{|c|rrr|rrr|rrr|}
 \hline
-\multirow{3}{*}{\textbf{$n$}} & \multicolumn{9}{c|}{\textbf{Latensi Skenario 3}} \\ \cline{2-10}
- & \multicolumn{3}{c|}{\textbf{CRDT Peer-To-Peer}} & \multicolumn{3}{c|}{\textbf{CRDT Client Server}} & \multicolumn{3}{c|}{\textbf{OT Client Server}} \\ \cline{2-10}
- & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & Max \\ \hline
-2 & \multicolumn{1}{c|}{23.303} & \multicolumn{1}{c|}{21.0} & \multicolumn{1}{c|}{76.0} & \multicolumn{1}{c|}{39.497} & \multicolumn{1}{c|}{38.0} & \multicolumn{1}{c|}{134.0} & \multicolumn{1}{c|}{87.424} & \multicolumn{1}{c|}{84.0} & 168.0 \\ \hline
-4 & \multicolumn{1}{c|}{34.003} & \multicolumn{1}{c|}{30.0} & \multicolumn{1}{c|}{223.0} & \multicolumn{1}{c|}{46.098} & \multicolumn{1}{c|}{42.0} & \multicolumn{1}{c|}{220.0} & \multicolumn{1}{c|}{98.838} & \multicolumn{1}{c|}{86.0} & 1225.0 \\ \hline
-8 & \multicolumn{1}{c|}{55.564} & \multicolumn{1}{c|}{47.0} & \multicolumn{1}{c|}{313.0} & \multicolumn{1}{c|}{63.838} & \multicolumn{1}{c|}{56.0} & \multicolumn{1}{c|}{308.0} & \multicolumn{1}{c|}{235.618} & \multicolumn{1}{c|}{151.0} & 2010.0 \\ \hline
+\multirow{2}{*}{$n$} & \multicolumn{3}{c|}{\textbf{CRDT Peer-To-Peer}} & \multicolumn{3}{c|}{\textbf{CRDT Client Server}} & \multicolumn{3}{c|}{\textbf{OT Client Server}} \\ \cline{2-10}
+ & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} \\ \hline
+\textbf{2} & \multicolumn{1}{r|}{23.30} & \multicolumn{1}{r|}{21.00} & 76.00 & \multicolumn{1}{r|}{39.50} & \multicolumn{1}{r|}{38.00} & 134.00 & \multicolumn{1}{r|}{87.42} & \multicolumn{1}{r|}{84.00} & 168.00 \\ \hline
+\textbf{4} & \multicolumn{1}{r|}{34.00} & \multicolumn{1}{r|}{30.00} & 223.00 & \multicolumn{1}{r|}{46.10} & \multicolumn{1}{r|}{42.00} & 220.00 & \multicolumn{1}{r|}{98.84} & \multicolumn{1}{r|}{86.00} & 1225.00 \\ \hline
+\textbf{8} & \multicolumn{1}{r|}{55.56} & \multicolumn{1}{r|}{47.00} & 313.00 & \multicolumn{1}{r|}{63.84} & \multicolumn{1}{r|}{56.00} & 308.00 & \multicolumn{1}{r|}{235.62} & \multicolumn{1}{r|}{151.00} & 2010.00 \\ \hline
 \end{tabular}
 \end{table}
 
@@ -28,14 +70,13 @@
 \begin{table}[H]
  \centering
  \caption{Deskripsi Statistik Latensi Skenario Keempat dalam ms}
-\begin{tabular}{|c|ccccccccc|}
+\begin{tabular}{|c|rrr|rrr|rrr|}
 \hline
-\multirow{3}{*}{\textbf{$n$}} & \multicolumn{9}{c|}{\textbf{Latensi Skenario 4}} \\ \cline{2-10}
- & \multicolumn{3}{c|}{\textbf{CRDT Peer-To-Peer}} & \multicolumn{3}{c|}{\textbf{CRDT Client Server}} & \multicolumn{3}{c|}{\textbf{OT Client Server}} \\ \cline{2-10}
- & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & Max \\ \hline
-2 & \multicolumn{1}{c|}{3.045} & \multicolumn{1}{c|}{17.0} & \multicolumn{1}{c|}{19.0} & \multicolumn{1}{c|}{16.754} & \multicolumn{1}{c|}{3.0} & \multicolumn{1}{c|}{5.0} & \multicolumn{1}{c|}{31.791} & \multicolumn{1}{c|}{30.0} & 170.0 \\ \hline
-4 & \multicolumn{1}{c|}{3.131} & \multicolumn{1}{c|}{17.0} & \multicolumn{1}{c|}{21.0} & \multicolumn{1}{c|}{16.554} & \multicolumn{1}{c|}{3.0} & \multicolumn{1}{c|}{6.0} & \multicolumn{1}{c|}{44.468} & \multicolumn{1}{c|}{32.0} & 309.0 \\ \hline
-8 & \multicolumn{1}{c|}{3.357} & \multicolumn{1}{c|}{17.0} & \multicolumn{1}{c|}{35.0} & \multicolumn{1}{c|}{17.160} & \multicolumn{1}{c|}{3.0} & \multicolumn{1}{c|}{19.0} & \multicolumn{1}{c|}{59.858} & \multicolumn{1}{c|}{30.33} & 551.0 \\ \hline
+\multirow{2}{*}{$n$} & \multicolumn{3}{c|}{\textbf{CRDT Peer-To-Peer}} & \multicolumn{3}{c|}{\textbf{CRDT Client Server}} & \multicolumn{3}{c|}{\textbf{OT Client Server}} \\ \cline{2-10}
+ & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} \\ \hline
+\textbf{2} & \multicolumn{1}{r|}{3.05} & \multicolumn{1}{r|}{17.00} & 19.00 & \multicolumn{1}{r|}{16.75} & \multicolumn{1}{r|}{3.00} & 5.00 & \multicolumn{1}{r|}{31.79} & \multicolumn{1}{r|}{30.00} & 170.00 \\ \hline
+\textbf{4} & \multicolumn{1}{r|}{3.13} & \multicolumn{1}{r|}{17.00} & 21.00 & \multicolumn{1}{r|}{16.55} & \multicolumn{1}{r|}{3.00} & 6.00 & \multicolumn{1}{r|}{44.47} & \multicolumn{1}{r|}{32.00} & 309.00 \\ \hline
+\textbf{8} & \multicolumn{1}{r|}{3.36} & \multicolumn{1}{r|}{17.00} & 35.00 & \multicolumn{1}{r|}{17.16} & \multicolumn{1}{r|}{3.00} & 19.00 & \multicolumn{1}{r|}{59.86} & \multicolumn{1}{r|}{30.33} & 551.00 \\ \hline
 \end{tabular}
 \end{table}
 
