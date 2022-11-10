@@ -45,13 +45,13 @@ Pada Gambar~\ref{fig:activity}, perilaku sinkronisasi \textit{shell-shell} progr
 \section{CRDT (\textit{Conflict-Free Replicated Data Type}) Berbasis \textit{Peer-To-Peer} dan \textit{Client-Server}}
 \label{sec:desain_crdt}
 
+CRDT pada dua skenario arsitektur dalam penelitian ini menggunakan library CRDT Yjs yang menggunakan algoritma YATA~\citep{Nicolaescu2016yjs} yang dijelaskan pada subbab~\ref{sec:penelitian_terkait}. Setiap \textit{peer} atau klien memiliki replika besar yang direpresentasikan dalam tipe data YDocs. YDocs dapat terdiri dari beberapa CRDT untuk menyimpan data-data yang akan dijaga di setiap \textit{peer} atau klien. Implementasi dari variasi \textit{peer-to-peer} menggunakan \textit{library} penyedia jaringan YWebRTC yang telah dimodifikasi untuk memiliki antarmuka untuk mengirim pesan ke \textit{peer} tertentu melalui jaringan RTCDataChannel. Bagian \textit{shell} pada aplikasi direpresentasikan sebagai sebuah CRDT \textit{map} yang memetakan ID ke sebuah CRDT \textit{grow-only array} yang merepresentasikan \textit{shell} yang berjalan pada salah satu \textit{peer host}. \textit{Keystroke} yang diberikan oleh sebuah \textit{peer} tertentu akan dikirim langsung pada \textit{peer host} yang menjalankannya, kemudian \textit{peer host} akan menambahkan hasil \textit{keystroke} pada CRDT-nya.
+
 \begin{figure}
     \centering
     \includegraphics[scale=0.65]{assets/skripsi/Arsitektur_WebRTC_CRDT}
     \caption{Arsitektur yang Menggunakan WebRTC dengan \textit{WebSocket Signalling} dan CRDT}
 \end{figure}
-
-CRDT pada dua skenario arsitektur dalam penelitian ini menggunakan library CRDT Yjs yang menggunakan algoritma YATA~\citep{Nicolaescu2016yjs} yang dijelaskan pada subbab~\ref{sec:penelitian_terkait}. Setiap \textit{peer} atau klien memiliki replika besar yang direpresentasikan dalam tipe data YDocs. YDocs dapat terdiri dari beberapa CRDT untuk menyimpan data-data yang akan dijaga di setiap \textit{peer} atau klien. Implementasi dari variasi \textit{peer-to-peer} menggunakan \textit{library} penyedia jaringan YWebRTC yang telah dimodifikasi untuk memiliki antarmuka untuk mengirim pesan ke \textit{peer} tertentu melalui jaringan RTCDataChannel. Bagian \textit{shell} pada aplikasi direpresentasikan sebagai sebuah CRDT \textit{map} yang memetakan ID ke sebuah CRDT \textit{grow-only array} yang merepresentasikan \textit{shell} yang berjalan pada salah satu \textit{peer host}. \textit{Keystroke} yang diberikan oleh sebuah \textit{peer} tertentu akan dikirim langsung pada \textit{peer host} yang menjalankannya, kemudian \textit{peer host} akan menambahkan hasil \textit{keystroke} pada CRDT-nya.
 
 \begin{figure}
     \centering
@@ -62,8 +62,11 @@ CRDT pada dua skenario arsitektur dalam penelitian ini menggunakan library CRDT 
 Perbedaan antara kedua implementasi arsitektur CRDT ini terdapat pada \textit{provider} atau penyedia jaringannya. Pada arsitektur \textit{client-server}, penelitian ini menggunakan \textit{library} YWebSocket yang telah dimodifikasi pula untuk dapat mengirim pesan kepada klien lain tertentu dalam sebuah jaringan melalui server. Penyedia jaringan pada dasarnya memberikan abstraksi bagi setiap \textit{peer} atau klien dalam sebuah jaringan terdistribusi untuk berhubungan satu sama lain. Terdapat fitur tambahan bagi server pada arsitektur ini untuk dapat melakukan persistensi data. Persistensi ini mengizinkan untuk server menyimpan salah satu replika dari dokumen, sehingga dokumen masih akan tetap ada walaupun tidak ada klien yang terhubung. Selain menggunakan CRDT, arsitektur \textit{client-server} juga dapat digunakan bersamaan dengan metode \textit{operational transformation} untuk menjaga identitas replika dalam suatu jaringan terdistribusi. Dalam penelitian ini, variasi PeerToCP dengan \textit{operational transformation} yang hanya memenuhi \textit{Transformation Property 1} akan diujikan pula.
 
 
+
 \section{Metode \textit{Operational Transformation} Berbasis \textit{Client-Server}}
 \label{sec:design_ot}
+
+Untuk suatu dokumen yang hanya menyimpan teks biasa (\textit{plain text}), operasi \textit{operational transformation} yang hanya memenuhi sifat \textit{TP1} dapat diimplementasi dengan sederhana dalam arsitektur \textit{client-server}. Algoritma bekerja dengan menyimpan sebuah \textit{array} perubahan lokal yang belum diketahui oleh server. Perubahan-perubahan lokal beserta versi dokumen yang dapat disimpulkan dari banyaknya perubahan yang sudah dilakukan dari awal dokumen akan dikirimkan secara berkala dengan mekanisme RPC over WebSocket. Mekanisme ini pada dasarnya mengizinkan alur \textit{non-blocking} dalam menunggu balasan sebelum mengirimkan percobaan pengiriman perubahan lainnya. Apabila versi dasar dari server lebih baru daripada versi lokal, maka pengiriman perubahan akan ditolak, dan server akan memberikan respons kepada klien tersebut untuk melakukan \textit{rebase} atau menambahkan \textit{update} yang terdapat di server terlebih dahulu sebelum dapat mengirim percobaan pengiriman lagi.
 
 \begin{figure}
     \centering
@@ -71,8 +74,6 @@ Perbedaan antara kedua implementasi arsitektur CRDT ini terdapat pada \textit{pr
     \caption{Arsitektur yang Menggunakan WebSocket dan \textit{Operational Transformation}}
     \label{fig:websocket_ot}
 \end{figure}
-
-Untuk suatu dokumen yang hanya menyimpan teks biasa (\textit{plain text}), operasi \textit{operational transformation} yang hanya memenuhi sifat \textit{TP1} dapat diimplementasi dengan sederhana dalam arsitektur \textit{client-server}. Algoritma bekerja dengan menyimpan sebuah \textit{array} perubahan lokal yang belum diketahui oleh server. Perubahan-perubahan lokal beserta versi dokumen yang dapat disimpulkan dari banyaknya perubahan yang sudah dilakukan dari awal dokumen akan dikirimkan secara berkala dengan mekanisme RPC over WebSocket. Mekanisme ini pada dasarnya mengizinkan alur \textit{non-blocking} dalam menunggu balasan sebelum mengirimkan percobaan pengiriman perubahan lainnya. Apabila versi dasar dari server lebih baru daripada versi lokal, maka pengiriman perubahan akan ditolak, dan server akan memberikan respons kepada klien tersebut untuk melakukan \textit{rebase} atau menambahkan \textit{update} yang terdapat di server terlebih dahulu sebelum dapat mengirim percobaan pengiriman lagi.
 
 Perubahan \textit{remote} yang diterima dari server akan ditransformasikan satu sama lain dengan perubahan lokal yang belum diketahui oleh server. Perubahan lokal akan ditimpa dengan perubahan yang sudah ditransformasikan dengan perubahan \textit{remote}. Percobaan pengiriman yang dikirim selanjutnya akan mengikuti perubahan yang sudah ditransformasikan ini. \textit{Operational transformation} hanya terjadi di lokal dan perubahan akan diperbarui secara seri, sehingga setiap dokumen dalam jaringan memiliki replika yang berujung identik dan konvergen.
 
