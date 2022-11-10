@@ -6,7 +6,7 @@ Bab ini membahas mengenai hasil dan analisis dari evaluasi yang telah dilaksanak
 
 \section{Evaluasi \textit{Resource} Aplikasi}
 
-
+Berdasarkan eksperimen yang dilakukan, setiap variasi dari PeerToCP menghasilkan nilai cacahan yang sama untuk setiap skenarionya. Namun pada skenario pertama dengan 8 klien pada variasi Operational Transformation yang berbasis \textit{Client-Server} dapat terjadi pemutusan hubungan \textit{disconnection} yang tidak dapat terhubung kembali karena \textit{bandwidth} koneksi internet yang berada di luar batas \textit{environment} pengujian. Hal ini disebabkan karena pada saat operasi \textit{update}, ukuran \textit{update} terlalu besar untuk dapat ditangani oleh server, sehingga penerimaan data yang dilakukan melalui koneksi \textit{WebSocket} mengalami \texti{timeout} saat terjadi \textit{update} pada beberapa mesin secara bersamaan. Skenario dengan jumlah klien ini diulang hingga tiga kali eksperimen, dan dalam setiap eksperimen tersebut, satu hingga dua klien yang dilakukan tidak dapat terhubung kembali. Perhatikan bahwa pada eksperimen, waktu pemutusan hubungan  dilakukan secara acak dalam periode durasi yang sama untuk setiap kliennya seperti yang dijelaskan pada bab sebelumnya.
 
 \begin{table}[H]
  \centering
