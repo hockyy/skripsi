@@ -36,7 +36,7 @@ Pada skenario pertama ini, terlihat bahwa variasi PeerToCP yang menggunakan CRDT
 
 \section{Aspek \textit{Scalability} dan \textit{Responsiveness}}
 
-Latensi dari teks editor secara khusus diukur secara terus menerus pada skenario ketiga. Setiap klien atau \textit{peer} akan diukur waktu selisih penerimaan datanya dan dicatat latensinya pada waktu data dokumen diterima, kemudian dilakukan rata-rata untuk $n$ klien-klien atau \textit{peers} tersebut tabel~\ref{tab:latency-3} menunjukkan latensi PeerToCP variasi CRDT \textit{peer-to-peer} memiliki latensi yang paling rendah, namun semakin besar nilai $n$, selisih perbedaan CRDT \textit{client-server} dan CRDT \textit{peer-to-peer} semakin mengecil. Sementara pada variasi OT \textit{client-server}, latensinya dua kali lebih besar dari variasi CRDT \textit{client-server}, dengan lonjakan latensi maksimum hingga dua detik saat $n = 8$.
+Latensi dari teks editor secara khusus diukur secara terus menerus pada skenario ketiga tanpa adanya pemutusan hubungan seperti pada skenario pertama dan kedua. Setiap klien atau \textit{peer} akan diukur waktu selisih penerimaan datanya terhadap klien yang bukan dirinya sendiri dan dicatat latensinya pada waktu data dokumen diterima, kemudian dilakukan rata-rata untuk $n$ klien-klien atau \textit{peers} tersebut tabel~\ref{tab:latency-3} menunjukkan latensi PeerToCP variasi CRDT \textit{peer-to-peer} memiliki latensi yang paling rendah, namun semakin besar nilai $n$, selisih perbedaan CRDT \textit{client-server} dan CRDT \textit{peer-to-peer} semakin mengecil. Sementara pada variasi OT \textit{client-server}, latensinya dua kali lebih besar dari variasi CRDT \textit{client-server}, dengan lonjakan latensi maksimum hingga dua detik saat $n = 8$.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
@@ -55,6 +55,15 @@ Latensi dari teks editor secara khusus diukur secara terus menerus pada skenario
 \end{table}
 
 Dari segi skalabilitasnya, dengan asumsi pengguna berada dalam jarak yang dekat, misalnya dalam kasus ini setiap \textit{peers} berada dalam satu zona yang sama, yaitu Indonesia. Variasi \textit{peer-to-peer} memberikan performa yang optimal dibandingkan \textit{client-server} untuk jumlah $n$ tertentu. Berdasarkan perhitungan dan proyeksi jumlah pengguna yang bertambah, variasi dari CRDT \textit{client-server} dapat memberikan \textit{responsiveness} yang lebih baik untuk suatu nilai $n$ yang lebih tinggi atau saat \textit{peers} berada pada daerah yang lebih jauh antara satu sama lainnya.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=15cm]{./assets/skripsi/benchmark-vis_cell_7_output_5}
+ \caption{Grafik Latensi pada Setiap Variasi PeerToCP}
+ \label{fig:7-5}
+\end{figure}
+
+Perbedaan latensi yang
 
 \begin{table}[H]
  \centering
