@@ -42,7 +42,7 @@ Latensi dari teks editor secara khusus diukur secara terus menerus pada skenario
 % \usepackage{multirow}
 \begin{table}[H]
  \centering
- \caption{Deskripsi Statistik Latensi Skenario Ketiga dalam ms}
+ \caption{Statistik Latensi Operasi Nonlokal pada Skenario Ketiga (Teks Editor Bersama) dalam ms}
 \begin{tabular}{|c|rrr|rrr|rrr|}
 \hline
 \multirow{2}{*}{$n$} & \multicolumn{3}{c|}{\textbf{CRDT Peer-To-Peer}} & \multicolumn{3}{c|}{\textbf{CRDT Client Server}} & \multicolumn{3}{c|}{\textbf{OT Client Server}} \\ \cline{2-10}
@@ -56,19 +56,58 @@ Latensi dari teks editor secara khusus diukur secara terus menerus pada skenario
 
 Dari segi skalabilitasnya, dengan asumsi pengguna berada dalam jarak yang dekat, misalnya dalam kasus ini setiap \textit{peers} berada dalam satu zona yang sama, yaitu Indonesia. Variasi \textit{peer-to-peer} memberikan performa yang optimal dibandingkan \textit{client-server} untuk jumlah $n$ tertentu. Berdasarkan perhitungan dan proyeksi jumlah pengguna yang bertambah, variasi dari CRDT \textit{client-server} dapat memberikan \textit{responsiveness} yang lebih baik untuk suatu nilai $n$ yang lebih tinggi atau saat \textit{peers} berada pada daerah yang lebih jauh antara satu sama lainnya.
 
+Perbedaan latensi ini dapat disebabkan oleh faktor jaringan dan arsitekturnya atau algoritma yang memastikan bahwa dokumen tersebut sama pada setiap replikanya. Dari analisis algoritma, variasi CRDT akan memberikan latensi melakukan penerapan operasi lokal waktu yang sama. Operasi lokal dalam konteks ini ialahoperasi pada klien tersebut sendiri yang bersifat luring serta \textit{local-first}. dengan  Dalam praktisnya, gambar~\ref{fig:12-5} menunjukkan adanya perbedaan latensi yang tidak terlalu signifikan, yaitu dengan mean hanya sekitar 5ms. Perlu diketahui juga bahwa nilai lonjakan latensi maksimalnya yang berdekatan. Perlu diketahui bahwa skalabilitas latensi algoritma CRDT dan OT tumbuh secara berbeda. Kompleksitas waktu dari OT akan dipengaruhi oleh banyaknya \textit{update} berbeda, sementara kompleksitas waktu CRDT akan dipengaruhi oleh banyaknya karakter atau ukuran dokumen.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=15cm]{./assets/skripsi/benchmark-vis_cell_12_output_5}
+ \caption{Grafik Waktu \textit{Resolve} Operasi Lokal pada Editor Setiap Variasi Klien atau \textit{Peers} PeerToCP}
+ \label{fig:12-5}
+\end{figure}
+
+Latensi total diperoleh dari waktu penerapan operasi lokal dan nonlokal ditambah dengan waktu transmisi jaringan pada arsitektur yang berbeda-beda. Gambar~\ref{fig:7-5} menunjukkan perbedaan latensi yang cukup besar, serta lonjakan latensi yang terjadi beberapa kali sepanjang skenario ketiga berjalan. Hal ini dapat disebabkan oleh beberapa hal, yakni waktu \textit{resolve} operasi nonlokal dan adanya efek penumpukan \textit{update} yang diilustrasikan pada diagram gambar~\ref{diagram:snowball}.
+
 \begin{figure}
  \centering
  \includegraphics[width=15cm]{./assets/skripsi/benchmark-vis_cell_7_output_5}
- \caption{Grafik Latensi pada Setiap Variasi PeerToCP}
+ \caption{Grafik Mean Latensi pada Operasi Nonlokal Setiap Variasi Klien atau \textit{Peers} PeerToCP}
  \label{fig:7-5}
 \end{figure}
 
-Perbedaan latensi yang
+\begin{figure}
+ \centering
+ \includegraphics[width=15cm]{./assets/skripsi/Snowball}
+ \caption{Diagram Ilustrasi Penumpukan \textit{Update}}
+ \label{diagram:snowball}
+\end{figure}
+
+Pada arsitektur \textit{operational transformation} berbasis \textit{client-server}, \textit{update} dari suatu klien tidak akan diterima oleh server apabila klien tersebut belum memiliki versi terbaru dari server. Penumpukan \textit{update} ini dapat terjadi karena klien tersebut semakin tidak bisa mengirimkan datanya karena semakin besar dan selalu didahului oleh klien lain yang berada dalam jaringan tersebut. Penumpukan ini dapat menyebabkan tidak dapat diperbaruinya salah satu klien dan transmisi data keluar yang besar karena pengiriman \textit{update} besar yang dilakukan terus menerus.
+
+Dalam praktis penggunaan realistisnya, hal ini diperkirakan tidak umum terjadi karena frekuensi pengetikan atau pemasukan karakter tidak dilakukan secara bersamaan dan tidak sebanyak skenario pertama dan kedua. Operasi salin dan tempel secara berkali-kali dapat berpotensi menyebabkan hal ini terjadi karena perubahan dokumen dalam jumlah karakter yang banyak terjadi. Namun dalam praktisnya, operasi tersebut diasumsikan hanya dilakukan dengan jeda frekuensi yang membolehkan setiap klien dalam jaringan memperbarui replikanya sebelum operasi besar lain dilakukan.
+
+Selain operasi penyuntingan dokumen, skenario empat menguji latensi \textit{shell} yang dapat digunakan secara bersama. Secara umum, latensi tersebut digambarkan pada tabel~\ref{tab:latency-4}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+ \centering
+ \caption{Statistik Latensi Operasi Nonlokal pada Skenario Keempat (\textit{Shell} Bersama) dalam Satuan ms}
+\begin{tabular}{|c|rrr|rrr|rrr|}
+\hline
+\multirow{2}{*}{$n$} & \multicolumn{3}{c|}{\textbf{CRDT Peer-To-Peer}} & \multicolumn{3}{c|}{\textbf{CRDT Client Server}} & \multicolumn{3}{c|}{\textbf{OT Client Server}} \\ \cline{2-10}
+ & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} \\ \hline
+\textbf{2} & \multicolumn{1}{r|}{3.05} & \multicolumn{1}{r|}{3.00} & 5.00 & \multicolumn{1}{r|}{16.75} & \multicolumn{1}{r|}{17.00} & 19.00 & \multicolumn{1}{r|}{31.79} & \multicolumn{1}{r|}{30.00} & 170.00 \\ \hline
+\textbf{4} & \multicolumn{1}{r|}{3.13} & \multicolumn{1}{r|}{3.00} & 6.00 & \multicolumn{1}{r|}{16.55} & \multicolumn{1}{r|}{17.00} & 21.00 & \multicolumn{1}{r|}{44.47} & \multicolumn{1}{r|}{32.00} & 309.00 \\ \hline
+\textbf{8} & \multicolumn{1}{r|}{3.36} & \multicolumn{1}{r|}{3.00} & 19.00 & \multicolumn{1}{r|}{17.16} & \multicolumn{1}{r|}{17.00} & 35.00 & \multicolumn{1}{r|}{59.86} & \multicolumn{1}{r|}{30.33} & 551.00 \\ \hline
+\end{tabular}
+ \label{tab:latency-4}
+\end{table}
 
 \begin{table}[H]
  \centering
 
- \caption{Deskripsi Statistik Aktivitas dan \textit{Resource Server} pada Skenario Pertama}
+ \caption{Statistik Aktivitas dan \textit{Resource Server} pada Skenario Pertama}
 \begin{tabular}{|cc|r|r|r|}
 \hline
 \multicolumn{2}{|c|}{$\boldsymbol{n}$} & \multicolumn{1}{c|}{\textbf{2}} & \multicolumn{1}{c|}{\textbf{4}} & \multicolumn{1}{c|}{\textbf{8}} \\ \hline
@@ -89,7 +128,7 @@ Perbedaan latensi yang
 
 \begin{table}[H]
  \centering
- \caption{Deskripsi Statistik Aktivitas dan \textit{Resource} Klien atau \textit{Peers} pada Skenario Pertama}
+ \caption{Statistik Aktivitas dan \textit{Resource} Klien atau \textit{Peers} pada Skenario Pertama}
 
 \begin{tabular}{|cc|r|r|r|}
 \hline
@@ -112,20 +151,6 @@ Perbedaan latensi yang
 \section{Evaluasi Latensi}
 
 
-% Please add the following required packages to your document preamble:
-% \usepackage{multirow}
-\begin{table}[H]
- \centering
- \caption{Deskripsi Statistik Latensi Skenario Keempat dalam ms}
-\begin{tabular}{|c|rrr|rrr|rrr|}
-\hline
-\multirow{2}{*}{$n$} & \multicolumn{3}{c|}{\textbf{CRDT Peer-To-Peer}} & \multicolumn{3}{c|}{\textbf{CRDT Client Server}} & \multicolumn{3}{c|}{\textbf{OT Client Server}} \\ \cline{2-10}
- & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} \\ \hline
-\textbf{2} & \multicolumn{1}{r|}{3.05} & \multicolumn{1}{r|}{3.00} & 5.00 & \multicolumn{1}{r|}{16.75} & \multicolumn{1}{r|}{17.00} & 19.00 & \multicolumn{1}{r|}{31.79} & \multicolumn{1}{r|}{30.00} & 170.00 \\ \hline
-\textbf{4} & \multicolumn{1}{r|}{3.13} & \multicolumn{1}{r|}{3.00} & 6.00 & \multicolumn{1}{r|}{16.55} & \multicolumn{1}{r|}{17.00} & 21.00 & \multicolumn{1}{r|}{44.47} & \multicolumn{1}{r|}{32.00} & 309.00 \\ \hline
-\textbf{8} & \multicolumn{1}{r|}{3.36} & \multicolumn{1}{r|}{3.00} & 19.00 & \multicolumn{1}{r|}{17.16} & \multicolumn{1}{r|}{17.00} & 35.00 & \multicolumn{1}{r|}{59.86} & \multicolumn{1}{r|}{30.33} & 551.00 \\ \hline
-\end{tabular}
-\end{table}
 
 
 
