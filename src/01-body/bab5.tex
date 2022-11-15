@@ -85,8 +85,7 @@ Pada arsitektur \textit{operational transformation} berbasis \textit{client-serv
 
 Dalam praktis penggunaan realistisnya, hal ini diperkirakan tidak umum terjadi karena frekuensi pengetikan atau pemasukan karakter tidak dilakukan secara bersamaan dan tidak sebanyak skenario pertama dan kedua. Operasi salin dan tempel secara berkali-kali dapat berpotensi menyebabkan hal ini terjadi karena perubahan dokumen dalam jumlah karakter yang banyak terjadi. Namun dalam praktisnya, operasi tersebut diasumsikan hanya dilakukan dengan jeda frekuensi yang membolehkan setiap klien dalam jaringan memperbarui replikanya sebelum operasi besar lain dilakukan.
 
-Selain operasi penyuntingan dokumen, skenario empat menguji latensi \textit{shell} yang dapat digunakan secara bersama. Secara umum, latensi tersebut digambarkan pada tabel~\ref{tab:latency-4}
-
+Skenario empat menguji latensi \textit{shell} yang dapat digunakan secara bersama. Secara umum, latensi tersebut dideskripsikan pada tabel~\ref{tab:latency-4}. Berbeda halnya dengan \textit{editor teks} yang waktu penerapan operasinya berdampak sebesar 20--70ms atau lebih. Struktur data berupa \textit{dictionary} sederhana pada \textit{shell} tidak memberikan perbedaan yang signifikan seperti yang digambarkan pada gambar grafik~\ref{fig:13-5}.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
@@ -103,6 +102,30 @@ Selain operasi penyuntingan dokumen, skenario empat menguji latensi \textit{shel
 \end{tabular}
  \label{tab:latency-4}
 \end{table}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=15cm]{./assets/skripsi/benchmark-vis_cell_13_output_5}
+ \caption{Grafik Waktu \textit{Resolve} Operasi Lokal pada \textit{Shell} Setiap Variasi Klien atau \textit{Peers} PeerToCP}
+ \label{fig:13-5}
+\end{figure}
+
+Hal ini dikarenakan operasi penerapan dari \textit{append-only array} pada \textit{operational transformation} memiliki kompleksitas waktu konstan secara \textit{amortized}. Sehingga secara skalabilitas, hanya berpengaruh terhadap efektivitas dan performa latensi dari transmisi data, yang mengalami permasalahan sama seperti pada skenario pertama, kedua, dan ketiga seperti yang ditunjukkan pada gambar grafik~\ref{fig:9-5}. Faktor lain yang mempengaruhi alasan latensi \textit{operational transformation} lebih lambat dari pada CRDT \textit{client-server} ialah mekanisme komunikasinya. Implementasi CRDT Yjs dilengkapi dengan proses \textit{encoding} dan \textit{decoding} yang membuat transmisinya dalam jaringan untuk data yang besar dapat lebih cepat, serta tidak diperlukan adanya operasi \textit{update} yang dilakukan secara berurutan. Sementara implementasi variasi \textit{operational transformation}-nya masih menggunakan mekanisme \textit{update} yang sama dengan \textit{editor teks}-nya, hanya dengan perbedaan kompleksitas waktu \textit{update} konstan \textit{shell}.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=15cm]{./assets/skripsi/benchmark-vis_cell_9_output_5}
+ \caption{Grafik Mean Latensi pada Operasi Nonlokal Setiap Variasi Klien atau \textit{Peers} PeerToCP}
+ \label{fig:9-5}
+\end{figure}
+
+Bila dibandingkan dengan arsitektur \textit{peer-to-peer}, setiap \textit{peers} dalam jaringan tersebut berada dalam jarak yang cenderung dekat. Latensinya akan lebih rendah dibandingkan kedua arsitektur \textit{client-server} yang harus melewati \textit{server} terlebih dahulu. Secara umum, variasi yang terbaik ialah variasi CRDT dengan arsitektur \textit{peer-to-peer} sejumlah $n$ tertentu. Dalam konteks eksperimen ini, untuk $n \leq 8$, variasi \textit{peer-to-peer} masih memberikan performa terbaik dari setiap variasi lainnya dari aspek \textit{responsiveness}. Diperkirakan untuk suatu nilai $n > 8$, atau jarak antar \textit{peers} yang lebih jauh, variasi CRDT dengan arsitektur \textit{client-server} dapat dipertimbangkan sebagai alternatif. Dalam beberapa kasus lainnya, CRDT \textit{peer-to-peer} dengan WebRTC dapat mengalami permasalahan antar \textit{peers} yang tidak dapat saling terhubung. Sehingga, alternatif berupa server penghubung, \textit{relay} atau STUN dapat digunakan dan latensinya memerlukan eksperimen lebih lanjut untuk dapat dibandingkan. Variasi \textit{operational transformation} juga dapat dipertimbangkan, karena secara teori operasi \textit{update}-nya yang konstan dapat memberikan latensi yang lebih baik karena memanfaatkan sifat \textit{append-only array} dan hanya satu \textit{peer} atau klien yang bertanggung jawab untuk meneruskan data interaksinya pada suatu \textit{shell}.
+
+Untuk mendapatkan latensi yang optimal, struktur data CRDT dapat dimodifikasi dengan memanfaatkan sifat tersebut. Lebih lanjut, sistem dapat dimodifikasi untuk menentukan arsitektur optimal antara \textit{peer-to-peer} tanpa \textit{relay server} seperti pada eksperimen ini, \textit{peer-to-peer} dengan \textit{relay server} untuk menangani \textit{peer} yang tidak dapat terhubung oleh WebRTC, atau pun \textit{client-server} apabila banyaknya pengguna atau \textit{peer} dalam jaringan cukup banyak. Dari segi latensi, pertimbangan hal tersebut dapat ditentukan dengan metriks sederhana seperti \textit{ping} antar pengguna yang dilakukan dari layar belakang aplikasi. Namun, dalam praktisnya terdapat beberapa faktor lain yang harus dipertimbangkan, yakni berupa sifat \textit{lightweight} atau sebarapa banyak proses atau pekerjaan, serta memori yang harus disediakan oleh server dan klien-klien atau \textit{peers}-nya.
+
+\section{Aspek \textit{Lightweight}}
+
+
 
 \begin{table}[H]
  \centering
