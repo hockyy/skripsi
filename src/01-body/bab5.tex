@@ -10,7 +10,7 @@ Kedua aspek ini tidak dapat dipisahkan satu sama lain, pada skenario pertama dan
 
 Berdasarkan eksperimen yang dilakukan, setiap variasi dari PeerToCP menghasilkan nilai cacahan yang sama untuk setiap skenarionya, yang berarti setiap dokumen berada pada kondisi atau \textit{state} akhir yang sama. Namun pada skenario pertama dengan 8 klien pada variasi Operational Transformation yang berbasis \textit{Client-Server}, dapat terjadi pemutusan hubungan \textit{disconnection} yang tidak dapat terhubung kembali karena \textit{bandwidth} koneksi internet yang berada di luar batas \textit{environment} pengujian.
 
-Skenario dengan jumlah klien ini diulang hingga tiga kali eksperimen, dan dalam setiap eksperimen tersebut, satu hingga dua klien tidak dapat terhubung kembali. Perhatikan bahwa pada eksperimen, waktu pemutusan hubungan dilakukan secara acak dalam periode durasi yang sama untuk setiap kliennya seperti yang dijelaskan pada bab sebelumnya. Hal ini ditunjukkan secara lebih detail pada grafik transmisi data yang masuk melalui jaringan pada klien pertama dan klien kedua untuk setiap variasi aplikasi dalam skenario pertama ini.
+Skenario dengan jumlah klien ini diulang hingga tiga kali eksperimen, dan dalam setiap eksperimen tersebut, satu hingga dua klien tidak dapat terhubung kembali. Pada eksperimen, waktu pemutusan hubungan dilakukan secara acak dalam periode durasi yang sama untuk setiap kliennya seperti yang dijelaskan pada bab sebelumnya. Hal ini ditunjukkan secara lebih detail pada grafik transmisi data yang masuk melalui jaringan pada klien pertama dan klien kedua untuk setiap variasi aplikasi dalam skenario pertama ini.
 
 \begin{figure}
  \centering
@@ -21,7 +21,7 @@ Skenario dengan jumlah klien ini diulang hingga tiga kali eksperimen, dan dalam 
 
 Pada saat operasi \textit{update} dilakukan tepat setelah koneksi terhubung kembali, ukuran \textit{update} cenderung lebih besar karena sudah terkumpul dari beberapa operasi yang terjadi selama klien sedang berada di luar jaringan. Ketika \textit{update} ini dilakukan, server sedang dalam keadaan berbagai klien lain yang hendak mengirimkan \textit{update}. Karena hal tersebut, algoritma \textit{operational transformation} yang hanya membolehkan suatu \textit{update} untuk dilakukan apabila versi terbaru yang sama sudah dimiliki oleh klien akan meminta klien untuk melakukan \textit{update}. Sementara tumpukan \textit{push update} berukuran besar terus dikirimkan hal ini akan memenuhi \textit{bandwidth} server, yang dapat dilihat pada grafik berikut.
 
-Perhatikan bahwa pada Gambar~\ref{fig:2-23}, menunjukkan klien pertama yang mengalami pemutusan jaringan pada detik ke-72 dan penghubungan kembali pada detik ke-102, terjadi pengiriman data yang cukup besar selama kurang lebih 20 detik. Begitu pula dengan klien kedua yang mengalami pemutusan jaringan pada sekitar detik ke-60 dan penghubungan kembali pada detik ke-90. Sesaat setelah suatu klien terhubung kembali ke suatu jaringan, akan terjadi \textit{spike} pada jaringan yang cukup besar. Pada jumlah pengguna yang cukup banyak dalam satu dokumen, pemutusan dan penghubungan jaringan yang secara sengaja dilakukan pada waktu yang serupa dapat menyebabkan ketidakandalan pada sistem ini. Grafik untuk server ditunjukkan pada gambar berikut.
+Gambar~\ref{fig:2-23}, menunjukkan klien pertama yang mengalami pemutusan jaringan pada detik ke-72 dan penghubungan kembali pada detik ke-102, terjadi pengiriman data yang cukup besar selama kurang lebih 20 detik. Begitu pula dengan klien kedua yang mengalami pemutusan jaringan pada sekitar detik ke-60 dan penghubungan kembali pada detik ke-90. Sesaat setelah suatu klien terhubung kembali ke suatu jaringan, akan terjadi \textit{spike} pada jaringan yang cukup besar. Pada jumlah pengguna yang cukup banyak dalam satu dokumen, pemutusan dan penghubungan jaringan yang secara sengaja dilakukan pada waktu yang serupa dapat menyebabkan ketidakandalan pada sistem ini. Grafik untuk server ditunjukkan pada gambar berikut.
 
 \begin{figure}
  \centering
@@ -30,13 +30,13 @@ Perhatikan bahwa pada Gambar~\ref{fig:2-23}, menunjukkan klien pertama yang meng
  \label{fig:2-24}
 \end{figure}
 
-Lalu lintas jaringan pada server variasi \textit{operational transformation} dengan arsitektur \textit{client-server} dapat mencapai lebih dari 800000 \textit{kilobits}/detik atau setara dengan 100 \textit{megabytes}/detik, sementara untuk skenario yang serupa, transmisi data pada server dengan variasi CRDT berarsitektur \textit{client-server} lebih hemat sekitar 950 kali. Melalui Gambar~\ref{fig:2-24}, diketahui bahwa mean transmisi jaringannya sekitar 80 kali lebih sedikit dibandingkan CRDT \textit{peer-to-peer} serta 950 kali lebih sedikit dibandingkan CRDT \textit{client-server}.
+Lalu lintas jaringan pada server variasi \textit{operational transformation} dengan arsitektur \textit{client-server} dapat mencapai lebih dari 800000 \textit{kilobits}/detik atau setara dengan 100 \textit{megabytes}/detik, sementara untuk skenario yang serupa, transmisi data pada server dengan variasi CRDT berarsitektur \textit{client-server} lebih hemat sekitar 950 kali. Melalui Gambar~\ref{fig:2-24}, diketahui bahwa mean transmisinya sekitar 80 kali lebih sedikit dibandingkan CRDT \textit{peer-to-peer} serta 950 kali lebih sedikit dibandingkan CRDT \textit{client-server}.
 
 Pada skenario pertama ini, terlihat bahwa variasi PeerToCP yang menggunakan CRDT lebih dapat diandalkan karena paralelitas \textit{update} yang dilakukan terhadap dokumen. Faktor-faktor lain yang memengaruhi variasi CRDT yang lebih baik juga tidak menutup kemungkinan dari segi implementasi \textit{provider websocket} yang digunakan, teknik kompresi dan \textit{encoding} yang diterapkan, serta efek bola salju yang ditimbulkan akibat \textit{update} berukuran besar yang terus dikirimkan menjadi tertumpuk dan selalu terlambat dibandingkan \textit{update} lain dan menyangkut aspek selanjutnya yang akan dibahas, yaitu \textit{Scalability} dan \textit{Responsiveness}.
 
 \section{Aspek \textit{Scalability} dan \textit{Responsiveness}}
 
-Latensi dari teks editor secara khusus diukur secara terus menerus pada skenario ketiga tanpa adanya pemutusan hubungan seperti pada skenario pertama dan kedua. Setiap klien atau \textit{peer} akan diukur waktu selisih penerimaan datanya terhadap klien yang bukan dirinya sendiri dan dicatat latensinya pada waktu data dokumen diterima, kemudian dilakukan rata-rata untuk $n$ klien-klien atau \textit{peers} tersebut tabel~\ref{tab:latency-3} menunjukkan latensi PeerToCP variasi CRDT \textit{peer-to-peer} memiliki latensi yang paling rendah, namun semakin besar nilai $n$, selisih perbedaan CRDT \textit{client-server} dan CRDT \textit{peer-to-peer} semakin mengecil. Sementara pada variasi OT \textit{client-server}, latensinya dua kali lebih besar dari variasi CRDT \textit{client-server}, dengan lonjakan latensi maksimum hingga dua detik saat $n = 8$.
+Latensi dari teks editor secara khusus diukur secara terus menerus pada skenario ketiga tanpa adanya pemutusan hubungan seperti pada skenario pertama dan kedua. Setiap pengguna akan diukur waktu selisih penerimaan datanya terhadap pengguna yang bukan dirinya sendiri dan dicatat latensinya pada waktu data dokumen diterima, kemudian dilakukan rata-rata untuk $n$ pengguna tersebut. Tabel~\ref{tab:latency-3} menunjukkan latensi PeerToCP variasi CRDT \textit{peer-to-peer} memiliki latensi yang paling rendah, namun semakin besar nilai $n$, selisih perbedaan CRDT \textit{client-server} dan CRDT \textit{peer-to-peer} semakin mengecil. Sementara pada variasi OT \textit{client-server}, latensinya dua kali lebih besar dari variasi CRDT \textit{client-server}, dengan lonjakan latensi maksimum hingga dua detik saat $n = 8$.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
@@ -61,7 +61,7 @@ Perbedaan latensi ini dapat disebabkan oleh faktor jaringan dan arsitekturnya at
 \begin{figure}
  \centering
  \includegraphics[width=15cm]{./assets/skripsi/benchmark-vis_cell_12_output_5}
- \caption{Grafik Waktu \textit{Resolve} Operasi Lokal pada Editor Setiap Variasi Klien atau \textit{Peers} PeerToCP}
+ \caption{Grafik Waktu \textit{Resolve} Operasi Lokal pada Editor Setiap Variasi Aplikasi Pengguna PeerToCP}
  \label{fig:12-5}
 \end{figure}
 
@@ -70,7 +70,7 @@ Latensi total diperoleh dari waktu penerapan operasi lokal dan nonlokal ditambah
 \begin{figure}
  \centering
  \includegraphics[width=15cm]{./assets/skripsi/benchmark-vis_cell_7_output_5}
- \caption{Grafik Mean Latensi pada Operasi Nonlokal Setiap Variasi Klien atau \textit{Peers} PeerToCP}
+ \caption{Grafik Mean Latensi pada Operasi Nonlokal Setiap Variasi Aplikasi Pengguna PeerToCP}
  \label{fig:7-5}
 \end{figure}
 
@@ -106,7 +106,7 @@ Skenario empat menguji latensi \textit{shell} yang dapat digunakan secara bersam
 \begin{figure}
  \centering
  \includegraphics[width=15cm]{./assets/skripsi/benchmark-vis_cell_13_output_5}
- \caption{Grafik Waktu \textit{Resolve} Operasi Lokal pada \textit{Shell} Setiap Variasi Klien atau \textit{Peers} PeerToCP}
+ \caption{Grafik Waktu \textit{Resolve} Operasi Lokal pada \textit{Shell} Setiap Variasi Aplikasi Pengguna PeerToCP}
  \label{fig:13-5}
 \end{figure}
 
@@ -115,43 +115,21 @@ Hal ini dikarenakan operasi penerapan dari \textit{append-only array} pada \text
 \begin{figure}
  \centering
  \includegraphics[width=15cm]{./assets/skripsi/benchmark-vis_cell_9_output_5}
- \caption{Grafik Mean Latensi pada Operasi Nonlokal Setiap Variasi Klien atau \textit{Peers} PeerToCP}
+ \caption{Grafik Mean Latensi pada Operasi Nonlokal Setiap Variasi Aplikasi Pengguna PeerToCP}
  \label{fig:9-5}
 \end{figure}
 
 Bila dibandingkan dengan arsitektur \textit{peer-to-peer}, setiap \textit{peers} dalam jaringan tersebut berada dalam jarak yang cenderung dekat. Latensinya akan lebih rendah dibandingkan kedua arsitektur \textit{client-server} yang harus melewati \textit{server} terlebih dahulu. Secara umum, variasi yang terbaik ialah variasi CRDT dengan arsitektur \textit{peer-to-peer} sejumlah $n$ tertentu. Dalam konteks eksperimen ini, untuk $n \leq 8$, variasi \textit{peer-to-peer} masih memberikan performa terbaik dari setiap variasi lainnya dari aspek \textit{responsiveness}. Diperkirakan untuk suatu nilai $n > 8$, atau jarak antar \textit{peers} yang lebih jauh, variasi CRDT dengan arsitektur \textit{client-server} dapat dipertimbangkan sebagai alternatif. Dalam beberapa kasus lainnya, CRDT \textit{peer-to-peer} dengan WebRTC dapat mengalami permasalahan antar \textit{peers} yang tidak dapat saling terhubung. Sehingga, alternatif berupa server penghubung, \textit{relay} atau STUN dapat digunakan dan latensinya memerlukan eksperimen lebih lanjut untuk dapat dibandingkan. Variasi \textit{operational transformation} juga dapat dipertimbangkan, karena secara teori operasi \textit{update}-nya yang konstan dapat memberikan latensi yang lebih baik karena memanfaatkan sifat \textit{append-only array} dan hanya satu \textit{peer} atau klien yang bertanggung jawab untuk meneruskan data interaksinya pada suatu \textit{shell}.
 
-Untuk mendapatkan latensi yang optimal, struktur data CRDT dapat dimodifikasi dengan memanfaatkan sifat tersebut. Lebih lanjut, sistem dapat dimodifikasi untuk menentukan arsitektur optimal antara \textit{peer-to-peer} tanpa \textit{relay server} seperti pada eksperimen ini, \textit{peer-to-peer} dengan \textit{relay server} untuk menangani \textit{peer} yang tidak dapat terhubung oleh WebRTC, atau pun \textit{client-server} apabila banyaknya pengguna atau \textit{peer} dalam jaringan cukup banyak. Dari segi latensi, pertimbangan hal tersebut dapat ditentukan dengan metriks sederhana seperti \textit{ping} antar pengguna yang dilakukan dari layar belakang aplikasi. Namun, dalam praktisnya terdapat beberapa faktor lain yang harus dipertimbangkan, yakni berupa sifat \textit{lightweight} atau sebarapa banyak proses atau pekerjaan, serta memori yang harus disediakan oleh server dan klien-klien atau \textit{peers}-nya.
+Untuk mendapatkan latensi yang optimal, struktur data CRDT dapat dimodifikasi dengan memanfaatkan sifat tersebut. Lebih lanjut, sistem dapat dimodifikasi untuk menentukan arsitektur optimal antara \textit{peer-to-peer} tanpa \textit{relay server} seperti pada eksperimen ini, \textit{peer-to-peer} dengan \textit{relay server} untuk menangani \textit{peer} yang tidak dapat terhubung oleh WebRTC, atau pun \textit{client-server} apabila banyaknya pengguna atau \textit{peer} dalam jaringan cukup banyak. Dari segi latensi, pertimbangan hal tersebut dapat ditentukan dengan metriks sederhana seperti \textit{ping} antar pengguna yang dilakukan dari layar belakang aplikasi. Namun, dalam praktisnya terdapat beberapa faktor lain yang harus dipertimbangkan, yakni berupa sifat \textit{lightweight} atau sebarapa banyak proses atau pekerjaan, serta memori yang harus disediakan oleh server dan penggunanya.
 
 \section{Aspek \textit{Lightweight}}
 
-
-
-\begin{table}[H]
- \centering
-
- \caption{Statistik Aktivitas dan \textit{Resource Server} pada Skenario Pertama}
-\begin{tabular}{|cc|r|r|r|}
-\hline
-\multicolumn{2}{|c|}{$\boldsymbol{n}$} & \multicolumn{1}{c|}{\textbf{2}} & \multicolumn{1}{c|}{\textbf{4}} & \multicolumn{1}{c|}{\textbf{8}} \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Peer-To-Peer}}} & CPU & 0.01 & 0.02 & 0.10 \\ \cline{2-5}
-\multicolumn{1}{|c|}{} & RAM & 0.67 & -0.03 & 0.40 \\ \cline{2-5}
-\multicolumn{1}{|c|}{} & Net In & 10.72 & 14.81 & 60.72 \\ \cline{2-5}
-\multicolumn{1}{|c|}{} & Net Out & -10.24 & -15.79 & -83.11 \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Client Server}}} & CPU & 0.93 & 1.29 & 1.68 \\ \cline{2-5}
-\multicolumn{1}{|c|}{} & RAM & 5.01 & 6.83 & 9.54 \\ \cline{2-5}
-\multicolumn{1}{|c|}{} & Net In & 73.26 & 176.64 & 324.19 \\ \cline{2-5}
-\multicolumn{1}{|c|}{} & Net Out & -71.79 & -193.90 & -391.66 \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{OT Client Server}}} & CPU & 4.85 & 14.18 & 24.33 \\ \cline{2-5}
-\multicolumn{1}{|c|}{} & RAM & 30.92 & 41.88 & 69.99 \\ \cline{2-5}
-\multicolumn{1}{|c|}{} & Net In & 52318.08 & 167768.04 & 308540.87 \\ \cline{2-5}
-\multicolumn{1}{|c|}{} & Net Out & -26494.76 & -84932.31 & -156178.28 \\ \hline
-\end{tabular}
-\end{table}
+Aspek ini memaparkan seberapa besar \textit{resource} komputasi yang dibutuhkan untuk setiap \textit{peers} dan servernya. Semua metriks RAM diukur dengan melakukan normalisasi ke nol sesaat sebelum uji kasus dimulai. Pengukuran ini didasarkan untuk membandingkan perubahan pertumbuhan. Selain itu, dalam beberapa kasus dalam menjalankan klien, aplikasi elektron yang berjalan di atas Chromium memiliki sistem \textit{garbage collection} dan \textit{cache}~\citep{chromium}. Sehingga, pengukuran skenario yang dilakukan relatif terhadap ukuran memori sesaat sebelum tes dimulai untuk memberikan perbandingan pertumbuhan yang lebih jelas. Pada mulanya, setiap server mulai dengan RAM yang relatif rendah, yakni di bawah 20MiB. Sementara setiap peers mulai dengan RAM yang cenderung lebih tinggi, yakni sekitar 200 MiB. Aplikasi ini membutuhkan memori yang cukup besar karena menggunakan \textit{framework} Electron yang menjalankan peramban web Chromium pada \textit{front-end}-nya.
 
 \begin{table}[H]
  \centering
- \caption{Statistik Aktivitas dan \textit{Resource} Klien atau \textit{Peers} pada Skenario Pertama}
+ \caption{Statistik Mean Aktivitas dan \textit{Resource} Aplikasi Pengguna pada Skenario Pertama}
 
 \begin{tabular}{|cc|r|r|r|}
 \hline
@@ -169,7 +147,52 @@ Untuk mendapatkan latensi yang optimal, struktur data CRDT dapat dimodifikasi de
 \multicolumn{1}{|c|}{} & Net In & 62.24127487 & 99.81376692 & 87.42216719 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net Out & -12962.04576 & -28872.47276 & -18344.14905 \\ \hline
 \end{tabular}
+ \label{tab:resource-client-1}
 \end{table}
+
+Tabel~\ref{tab:resource-client-1} berturut-turut memiliki parameter yang menunjukkan aktivitas utilitasi CPU dalam satuan persen utilisasi, 100\% utilisasi berarti sistem menggunakan satu \textit{core} vCPU dengan penuh. Selanjutnya sumber daya atau resource RAM yang sudah dinormalisasi dalam satuan MiB, diikuti dengan kecepatan penerimaan dan pengiriman data dalam satuan kilobits per detik. Penggunaan RAM dan penerimaan data pada variasi CRDT \textit{peer-to-peer} cenderung lebih tinggi untuk $n = 8$, hal ini disebabkan karena pada variasi ini, semakin banyak \textit{peers} pada jaringan, berarti semakin banyak pula replika dokumen yang harus disinkronisasi. Karena \textit{signalling server} pada variasi ini tidak berperan dalam transmisi data CRDT, sehingga setiap \textit{peers} akan bertanggung jawab untuk saling memberikan informasi satu sama lain dalam memastikan kesamaan informasi pada setiap replikanya.
+
+Variasi aplikasi CRDT \textit{client-server} secara relatif memberikan performa yang lebih baik untuk setiap variasi dari PeerToCP. Dari segi utilisasi tenaga komputasi pada \textit{environment} sistem pengujian dengan dua core vCPU dan utilisasi maksimal 200\%, skenario pertama dengan $n \geq 4$ secara rata-rata hanya menggunakan sekitar 1/3 \textit{resource} dari CPU seperti yang terlihat pada grafik gambar~\ref{fig:2-19}. Metriks ini dapat dipertimbangkan dengan tambahan bahwa skenario ini memberikan muatan operasi-operasi yang relatif lebih besar dan banyak dari perkiraan aktivitas penggunaan normal. Selain itu, sistem operasi secara optimal akan menentukan proses yang harus diutamakan baik dari segi penyimpanan dan prioritas komputasi saat berjalannya aplikasi-aplikasi di atas sistem.
+
+
+\begin{figure}
+ \centering
+ \includegraphics[width=13cm]{./assets/skripsi/benchmark-vis_cell_2_output_19}
+ \caption{Grafik Perbandingan Utilisasi CPU pada Klien Pertama dan Klien Kedua untuk $n = 8$}
+ \label{fig:2-19}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=13cm]{./assets/skripsi/benchmark-vis_cell_2_output_21}
+ \caption{Grafik Perbandingan Penggunaan RAM pada Klien Pertama dan Klien Kedua untuk $n = 8$}
+ \label{fig:2-21}
+\end{figure}
+
+Dari segi memori, kedua variasi CRDT memberikan pertumbuhan yang lebih optimal dibandingkan variasi OT. Namun, setiap variasinya menggunakan memori yang relatif kecil terhadap kapasitas penuh perangkat \textit{environment} pengujian, yakni sekitar 15\%. Penggunaan memori sebelum dinormalisasi rata-rata dimulai dengan menggunakan sekitar 200MiB, diikuti dengan pertumbuhan penggunaan seperti yang terlihat pada grafik gambar~\ref{fig:2-21}. Sistem operasi dapat memanfaatkan CPU dan RAM yang \textit{idle} sehingga utilisasinya dapat mendominasi proses lain pada komputer. Selama aplikasi tidak menggunakan utilisasi penuh yang mengganggu jalannya aktivitas pengguna dalam berinteraksi dengan aplikasi PeerToCP dan aplikasi lain, maka penggunaannya untuk jumlah pengguna yang terbatas dan diuji dalam eksperimen bagi pengguna setiap variasi PeerToCP dianggap memenuhi aspek \textit{lightweight} dari segi utilisasi CPU dan RAM.
+
+\begin{table}[H]
+ \centering
+ \caption{Statistik Mean Aktivitas dan \textit{Resource Server} pada Skenario Pertama}
+\begin{tabular}{|cc|r|r|r|}
+\hline
+\multicolumn{2}{|c|}{$\boldsymbol{n}$} & \multicolumn{1}{c|}{\textbf{2}} & \multicolumn{1}{c|}{\textbf{4}} & \multicolumn{1}{c|}{\textbf{8}} \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Peer-To-Peer}}} & CPU & 0.01 & 0.02 & 0.10 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & RAM & 0.67 & -0.03 & 0.40 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net In & 10.72 & 14.81 & 60.72 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net Out & -10.24 & -15.79 & -83.11 \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Client Server}}} & CPU & 0.93 & 1.29 & 1.68 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & RAM & 5.01 & 6.83 & 9.54 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net In & 73.26 & 176.64 & 324.19 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net Out & -71.79 & -193.90 & -391.66 \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{OT Client Server}}} & CPU & 4.85 & 14.18 & 24.33 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & RAM & 30.92 & 41.88 & 69.99 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net In & 52318.08 & 167768.04 & 308540.87 \\ \cline{2-5}
+\multicolumn{1}{|c|}{} & Net Out & -26494.76 & -84932.31 & -156178.28 \\ \hline
+\end{tabular}
+ \label{tab:resource-server-1}
+\end{table}
+
 
 \section{Evaluasi Latensi}
 
