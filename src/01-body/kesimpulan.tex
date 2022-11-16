@@ -2,30 +2,23 @@
 \chapter{\kesimpulan}
 \label{bab:6}
 %---------------------------------------------------------------
-Pada bab ini, Penulis akan memaparkan kesimpulan penelitian dan saran untuk penelitian berikutnya.
-
+Pada bab ini, penulis akan memaparkan kesimpulan penelitian dan eksperimen yang telah dilakukan terhadap sistem yang dikembangkan penulis. Penulis menyampaikan rangkuman singkat dan implikasi dari hasil evaluasi yang telah dipaparkan. Selain itu, penulis juga memberikan potensi pengembangan dan eksperimen lebih lanjut yang dapat diteliti di masa yang akan datang.
 
 %---------------------------------------------------------------
 \section{Kesimpulan}
 \label{sec:kesimpulan}
-%---------------------------------------------------------------
-Berikut ini adalah kesimpulan terkait pekerjaan yang dilakukan dalam penelitian ini:
-\begin{enumerate}
-	\item \bo{Poin pertama} \\
-	Penjelasan poin pertama.
-	\item \bo{Poin kedua} \\
-	Penjelasan poin kedua.
-\end{enumerate}
 
-Tulis kalimat penutup di sini.
+Penelitian ini dibuat untuk mewujudkan aplikasi PeerToCP, yaitu sebuah editor kode kolaboratif yang menyediakan \textit{shell} bersama yang bekerja dalam waktu nyata. Terdapat beberapa variasi arsitektur dan algoritma yang digunakan dalam aplikasi ini, yaitu algoritma OT (\textit{operational transformation}) dengan arsitektur \textit{client-server}, struktur data CRDT dengan arsitektur \textit{client-server}, serta variasi CRDT lainnya dengan arsitektur \textit{peer-to-peer} berbasis WebRTC.
 
+Penggunaan variasi CRDT yang merupakan pengembangan \textit{operational transformation} dengan struktur data tambahan pada aplikasi PeerToCP menghasilkan performa latensi dan penurunan kebutuhan \textit{resource} yang membuat aplikasi dengan variasi ini lebih dipilih. Untuk mengoptimisasi CRDT lebih lanjut, struktur data \textit{map} atau \textit{dictionary} untuk menyimpan replika \textit{shell} dapat dimodifikasi seperti variasi \textit{operational transformation} dengan memanfaatkan pengetahuan bahwa data hanya akan dimasukkan saja ke ujung \textit{array} tanpa ada proses penghapusan atau pengubahan pada indeks lain di \textit{array}. Variasi \textit{operational transformation} membutuhkan protokol jaringan dan jenis algoritma OT yang lebih baik dari yang saat ini diimplementasikan pada PeerToCP.
+
+Variasi \textit{client-server} dan \textit{peer-to-peer} yang menggunakan WebRTC memiliki kelebihan dan kekurangan masing-masing baik dari segi beban pada server maupun pada pengguna. Berdasarkan skenario-skenario pengujian yang dilakukan pada eksperimen ini, penggunaan untuk skala pengguna yang kecil ($\leq 8$) dan setiap pengguna berada pada jarak yang dekat dapat memanfaatkan versi CRDT \textit{peer-to-peer}. Untuk skala pengguna dalam suatu kelompok yang lebih besar, variasi CRDT \textit{client-server} lebih dipilih karena pertumbuhan transmisi data yang lebih pelan terhadap banyaknya klien dalam suatu kelompok jaringan. Selain itu, variasi \textit{client-server} ini juga lebih dipilih saat beberapa pengguna dalam jaringan kesulitan menginisialisasi koneksi WebRTC karena jaraknya yang berjauhan atau struktur jaringan yang mencegah adanya koneksi WebRTC (terhubung ke \textit{peer} lain secara langsung) terbentuk. Untuk skala pengguna keseluruhan yang lebih besar atau kelompok jaringan yang lebih banyak, variasi CRDT \textit{peer-to-peer} lebih dipilih karena muatan pada servernya yang jauh lebih rendah dan optimal bila dibandingkan dengan arsitektur \textit{client-server}.
 
 %---------------------------------------------------------------
 \section{Saran}
 \label{sec:saran}
+
 %---------------------------------------------------------------
-Berdasarkan hasil penelitian ini, berikut ini adalah saran untuk pengembangan penelitian berikutnya:
-\begin{enumerate}
-	\item Saran 1.
-	\item Saran 2.
-\end{enumerate}
+Berdasarkan hasil penelitian ini, terdapat potensi pengembangan sistem lanjutan untuk membuat sebuah jaringan adaptif tergantung dengan keadaannya dan dapat menjadi salah satu solusi dalam mengoptimisasi layanan yang lebih \textit{reliable} atau dapat diandalkan bagi semua penggunanya. Dari sisi algoritma dalam memastikan kesamaan replika data pada sebuah jaringan, variasi \textit{operational transformation} atau CRDT lain yang lebih optimal dapat digunakan untuk menggantikan yang ada pada variasi PeerToCP saat ini. Variasi ini diharapkan dapat mengoptimalkan latensi dan menurunkan penggunaan sumber daya yang dibutuhkan oleh sistem aplikasi.
+
+Dari aspek jaringan, beberapa teknologi baru seperti HTTP/3 atau versi terbaru dari HTTP menyediakan mekanisme WebTransport yang dapat diteliti lebih lanjut untuk menggantikan protokol WebSocket dalam eksperimen ini. WebTransport direncanakan untuk menyediakan antarmuka pemrograman yang lebih baik dan memiliki semua fitur yang dapat dilakukan oleh WebSocket dengan latensi yang lebih rendah. Selain itu, pengembangan \textit{front-end} dan aspek HCI (\textit{Human-Computer Interaction}) juga dapat ditingkatkan dalam aplikasi ini. Aspek performa dan pengalaman pengguna lebih lanjut dapat diekstensi ke aplikasi web yang dapat diakses tanpa perlu menggunakan aplikasi desktop seperti Electron, namun dengan \textit{drawback} tidak dapat menjadi \textit{host} untuk menyediakan \textit{shell} yang dapat digunakan bersama oleh setiap pengguna dalam jaringan. Beberapa teknologi serta bahasa pemrograman lain yang memiliki performa lebih baik dan penggunaan \textit{resource} lebih ringan dibandingkan Node.js dan Chromium pada Electron juga dapat digunakan untuk menggantikan \textit{framework} aplikasi saat ini. Tauri dan Qt menjadi salah satu teknologi alternatif yang menjadi pertimbangan penulis dalam mengembangkan aplikasi PeerToCP.
