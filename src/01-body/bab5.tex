@@ -30,7 +30,7 @@ Gambar~\ref{fig:2-23}, menunjukkan klien pertama yang mengalami pemutusan jaring
  \label{fig:2-24}
 \end{figure}
 
-Lalu lintas jaringan pada server variasi \textit{operational transformation} dengan arsitektur \textit{client-server} dapat mencapai lebih dari 800000 \textit{kilobits}/detik atau setara dengan 100 \textit{megabytes}/detik, sementara untuk skenario yang serupa, transmisi data pada server dengan variasi CRDT berarsitektur \textit{client-server} lebih hemat sekitar 950 kali. Melalui Gambar~\ref{fig:2-24}, diketahui bahwa mean transmisinya sekitar 80 kali lebih sedikit dibandingkan CRDT \textit{peer-to-peer} serta 950 kali lebih sedikit dibandingkan CRDT \textit{client-server}.
+Lalu lintas jaringan pada server variasi \textit{operational transformation} dengan arsitektur \textit{client-server} dapat mencapai lebih dari 800000 \textit{kilobits}/detik atau setara dengan 100 \textit{megabytes}/detik, sementara untuk skenario yang serupa, transmisi data pada server dengan variasi CRDT berarsitektur \textit{client-server} lebih hemat sekitar 950 kali. Melalui gambar~\ref{fig:2-24}, diketahui bahwa mean transmisinya sekitar 80 kali lebih sedikit dibandingkan CRDT \textit{peer-to-peer} serta 950 kali lebih sedikit dibandingkan CRDT \textit{client-server}.
 
 Pada skenario pertama ini, terlihat bahwa variasi PeerToCP yang menggunakan CRDT lebih dapat diandalkan karena paralelitas \textit{update} yang dilakukan terhadap dokumen. Faktor-faktor lain yang memengaruhi variasi CRDT yang lebih baik juga tidak menutup kemungkinan dari segi implementasi \textit{provider websocket} yang digunakan, teknik kompresi dan \textit{encoding} yang diterapkan, serta efek bola salju yang ditimbulkan akibat \textit{update} berukuran besar yang terus dikirimkan menjadi tertumpuk dan selalu terlambat dibandingkan \textit{update} lain dan menyangkut aspek selanjutnya yang akan dibahas, yaitu \textit{Scalability} dan \textit{Responsiveness}.
 
@@ -44,7 +44,7 @@ Latensi dari teks editor secara khusus diukur secara terus-menerus pada skenario
  \centering
 \begin{tabular}{|c|rrr|rrr|rrr|}
 \hline
-\multirow{2}{*}{$n$} & \multicolumn{3}{c|}{\textbf{CRDT Peer-To-Peer}} & \multicolumn{3}{c|}{\textbf{CRDT Client Server}} & \multicolumn{3}{c|}{\textbf{OT Client Server}} \\ \cline{2-10}
+\multirow{2}{*}{$n$} & \multicolumn{3}{c|}{\textbf{CRDT \textit{Peer-To-Peer}}} & \multicolumn{3}{c|}{\textbf{CRDT \textit{Client-Server}}} & \multicolumn{3}{c|}{\textbf{OT \textit{Client-Server}}} \\ \cline{2-10}
  & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} \\ \hline
 \textbf{2} & \multicolumn{1}{r|}{23.30} & \multicolumn{1}{r|}{21.00} & 76.00 & \multicolumn{1}{r|}{39.50} & \multicolumn{1}{r|}{38.00} & 134.00 & \multicolumn{1}{r|}{87.42} & \multicolumn{1}{r|}{84.00} & 168.00 \\ \hline
 \textbf{4} & \multicolumn{1}{r|}{34.00} & \multicolumn{1}{r|}{30.00} & 223.00 & \multicolumn{1}{r|}{46.10} & \multicolumn{1}{r|}{42.00} & 220.00 & \multicolumn{1}{r|}{98.84} & \multicolumn{1}{r|}{86.00} & 1225.00 \\ \hline
@@ -93,7 +93,7 @@ Skenario empat menguji latensi \textit{shell} yang dapat digunakan secara bersam
  \centering
 \begin{tabular}{|c|rrr|rrr|rrr|}
 \hline
-\multirow{2}{*}{$n$} & \multicolumn{3}{c|}{\textbf{CRDT Peer-To-Peer}} & \multicolumn{3}{c|}{\textbf{CRDT Client Server}} & \multicolumn{3}{c|}{\textbf{OT Client Server}} \\ \cline{2-10}
+\multirow{2}{*}{$n$} & \multicolumn{3}{c|}{\textbf{CRDT \textit{Peer-To-Peer}}} & \multicolumn{3}{c|}{\textbf{CRDT \textit{Client-Server}}} & \multicolumn{3}{c|}{\textbf{OT \textit{Client-Server}}} \\ \cline{2-10}
  & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} \\ \hline
 \textbf{2} & \multicolumn{1}{r|}{3.05} & \multicolumn{1}{r|}{3.00} & 5.00 & \multicolumn{1}{r|}{16.75} & \multicolumn{1}{r|}{17.00} & 19.00 & \multicolumn{1}{r|}{31.79} & \multicolumn{1}{r|}{30.00} & 170.00 \\ \hline
 \textbf{4} & \multicolumn{1}{r|}{3.13} & \multicolumn{1}{r|}{3.00} & 6.00 & \multicolumn{1}{r|}{16.55} & \multicolumn{1}{r|}{17.00} & 21.00 & \multicolumn{1}{r|}{44.47} & \multicolumn{1}{r|}{32.00} & 309.00 \\ \hline
@@ -133,15 +133,15 @@ Aspek ini memaparkan seberapa besar \textit{resource} komputasi yang dibutuhkan 
 \begin{tabular}{|cc|r|r|r|}
 \hline
 \multicolumn{2}{|c|}{$n$} & \multicolumn{1}{c|}{\textbf{2}} & \multicolumn{1}{c|}{\textbf{4}} & \multicolumn{1}{c|}{\textbf{8}} \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Peer-To-Peer}}} & CPU & 39.1964893 & 60.13947488 & 62.2870496 \\ \cline{2-5}
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT \textit{Peer-To-Peer}}}} & CPU & 39.1964893 & 60.13947488 & 62.2870496 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & RAM & 16.57856816 & 19.24442935 & 21.30499303 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net In & 28.5230253 & 96.16536701 & 229.4788353 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net Out & -28.03809012 & -93.97903876 & -223.6266535 \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Client Server}}} & CPU & 33.96390498 & 57.38616741 & 56.89049428 \\ \cline{2-5}
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT \textit{Client-Server}}}} & CPU & 33.96390498 & 57.38616741 & 56.89049428 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & RAM & 14.92823532 & 19.12934751 & 20.94699478 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net In & 19.46582482 & 27.68880062 & 30.96869733 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net Out & -19.76281471 & -21.21326889 & -18.73440885 \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{OT Client Server}}} & CPU & 47.79374975 & 73.29454876 & 65.25737338 \\ \cline{2-5}
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{OT \textit{Client-Server}}}} & CPU & 47.79374975 & 73.29454876 & 65.25737338 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & RAM & 25.9460194 & 31.17265199 & 36.33549154 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net In & 62.24127487 & 99.81376692 & 87.42216719 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net Out & -12962.04576 & -28872.47276 & -18344.14905 \\ \hline
@@ -152,7 +152,7 @@ Aspek ini memaparkan seberapa besar \textit{resource} komputasi yang dibutuhkan 
 
 Tabel~\ref{tab:resource-client-1} berturut-turut memiliki parameter yang menunjukkan aktivitas utilitasi CPU dalam satuan persen utilisasi, 100\% utilisasi berarti sistem menggunakan satu \textit{core} vCPU dengan penuh. Selanjutnya sumber daya atau resource RAM yang sudah dinormalisasi dalam satuan MiB, diikuti dengan kecepatan penerimaan dan pengiriman data dalam satuan kilobits per detik. Penggunaan RAM dan penerimaan data pada variasi CRDT \textit{peer-to-peer} cenderung lebih tinggi untuk $n = 8$, hal ini disebabkan karena pada variasi ini, semakin banyak \textit{peers} pada jaringan, berarti semakin banyak pula replika dokumen yang harus disinkronisasi. Karena \textit{signalling server} pada variasi ini tidak berperan dalam transmisi data CRDT, sehingga setiap \textit{peers} akan bertanggung jawab untuk saling memberikan informasi satu sama lain dalam memastikan kesamaan informasi pada setiap replikanya. Dari segi banyaknya data yang masuk ke dalam aplikasi variasi CRDT memastikan bahwa data-data tersebut dapat digunakan secara langsung dan setiap data yang dikirimkan akan digunakan tanpa ada kasus penolakan \textit{update} seperti pada variasi OT. Sehingga dari segi transmisi data keluar, variasi CRDT dianggap jauh lebih memenuhi aspek \textit{lightweight} dibandingkan variasi OT.
 
-Variasi aplikasi CRDT \textit{client-server} secara relatif memberikan performa yang lebih baik untuk setiap variasi dari PeerToCP. Dari segi utilisasi CPU pada \textit{environment} pengujian dengan dua core vCPU (utilisasi maksimal 200\%), skenario pertama dengan $n \geq 4$ secara rata-rata hanya menggunakan sekitar 1/3 \textit{resource} dari CPU seperti yang terlihat pada grafik gambar~\ref{fig:2-19}. Metriks ini dapat dipertimbangkan dengan tambahan bahwa skenario ini memberikan muatan operasi-operasi yang relatif lebih besar dan banyak dari perkiraan aktivitas penggunaan normal. Selain itu, sistem operasi secara optimal akan menentukan proses yang harus diutamakan baik dari segi penyimpanan dan prioritas komputasi saat berjalannya aplikasi-aplikasi di atas sistem.
+Variasi aplikasi CRDT \textit{client-server} secara relatif memberikan performa yang lebih baik untuk setiap variasi dari PeerToCP. Dari segi utilisasi CPU pada \textit{environment} pengujian dengan dua core vCPU (utilisasi maksimal 200\%), skenario pertama dengan $n \geq 4$ secara rata-rata hanya menggunakan sekitar 1/3 \textit{resource} dari CPU seperti yang terlihat pada gambar grafik~\ref{fig:2-19}. Metriks ini dapat dipertimbangkan dengan tambahan bahwa skenario ini memberikan muatan operasi-operasi yang relatif lebih besar dan banyak dari perkiraan aktivitas penggunaan normal. Selain itu, sistem operasi secara optimal akan menentukan proses yang harus diutamakan baik dari segi penyimpanan dan prioritas komputasi saat berjalannya aplikasi-aplikasi di atas sistem.
 
 \begin{figure}
  \centering
@@ -168,7 +168,7 @@ Variasi aplikasi CRDT \textit{client-server} secara relatif memberikan performa 
  \label{fig:2-21}
 \end{figure}
 
-Dari segi memori, kedua variasi CRDT memberikan pertumbuhan yang lebih optimal dibandingkan variasi OT. Namun, setiap variasinya menggunakan memori yang relatif kecil terhadap kapasitas penuh perangkat \textit{environment} pengujian, yakni sekitar 15\%. Penggunaan memori sebelum dinormalisasi rata-rata dimulai dengan menggunakan sekitar 200MiB, diikuti dengan pertumbuhan penggunaan seperti yang terlihat pada grafik gambar~\ref{fig:2-21}. Sistem operasi dapat memanfaatkan CPU dan RAM yang \textit{idle} sehingga utilisasinya dapat mendominasi proses lain pada komputer. Selama aplikasi tidak menggunakan utilisasi penuh yang mengganggu jalannya aktivitas pengguna dalam berinteraksi dengan aplikasi PeerToCP dan aplikasi lain, maka penggunaannya untuk jumlah pengguna yang terbatas dan diuji dalam eksperimen bagi pengguna setiap variasi PeerToCP dianggap memenuhi aspek \textit{lightweight} dari segi utilisasi CPU dan RAM.
+Dari segi memori, kedua variasi CRDT memberikan pertumbuhan yang lebih optimal dibandingkan variasi OT. Namun, setiap variasinya menggunakan memori yang relatif kecil terhadap kapasitas penuh perangkat \textit{environment} pengujian, yakni sekitar 15\%. Penggunaan memori sebelum dinormalisasi rata-rata dimulai dengan menggunakan sekitar 200MiB, diikuti dengan pertumbuhan penggunaan seperti yang terlihat pada gambar grafik~\ref{fig:2-21}. Sistem operasi dapat memanfaatkan CPU dan RAM yang \textit{idle} sehingga utilisasinya dapat mendominasi proses lain pada komputer. Selama aplikasi tidak menggunakan utilisasi penuh yang mengganggu jalannya aktivitas pengguna dalam berinteraksi dengan aplikasi PeerToCP dan aplikasi lain, maka penggunaannya untuk jumlah pengguna yang terbatas dan diuji dalam eksperimen bagi pengguna setiap variasi PeerToCP dianggap memenuhi aspek \textit{lightweight} dari segi utilisasi CPU dan RAM.
 
 
 \begin{table}[H]
@@ -176,15 +176,15 @@ Dari segi memori, kedua variasi CRDT memberikan pertumbuhan yang lebih optimal d
 \begin{tabular}{|cc|r|r|r|}
 \hline
 \multicolumn{2}{|c|}{$\boldsymbol{n}$} & \multicolumn{1}{c|}{\textbf{2}} & \multicolumn{1}{c|}{\textbf{4}} & \multicolumn{1}{c|}{\textbf{8}} \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Peer-To-Peer}}} & CPU & 0.01 & 0.02 & 0.10 \\ \cline{2-5}
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT \textit{Peer-To-Peer}}}} & CPU & 0.01 & 0.02 & 0.10 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & RAM & 0.67 & -0.03 & 0.40 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net In & 10.72 & 14.81 & 60.72 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net Out & -10.24 & -15.79 & -83.11 \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT Client Server}}} & CPU & 0.93 & 1.29 & 1.68 \\ \cline{2-5}
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT \textit{Client-Server}}}} & CPU & 0.93 & 1.29 & 1.68 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & RAM & 5.01 & 6.83 & 9.54 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net In & 73.26 & 176.64 & 324.19 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net Out & -71.79 & -193.90 & -391.66 \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{OT Client Server}}} & CPU & 4.85 & 14.18 & 24.33 \\ \cline{2-5}
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{OT \textit{Client-Server}}}} & CPU & 4.85 & 14.18 & 24.33 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & RAM & 30.92 & 41.88 & 69.99 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net In & 52318.08 & 167768.04 & 308540.87 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net Out & -26494.76 & -84932.31 & -156178.28 \\ \hline
