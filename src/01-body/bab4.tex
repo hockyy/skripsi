@@ -36,7 +36,7 @@ Node-pty merupakan \textit{library} Node.js yang menyediakan antarmuka untuk mel
 
 \section{Desain Sistem}
 
-Aplikasi PeerToCP didesain sebagai sebuah aplikasi \textit{desktop-based}, yang berarti dijalankan secara langsung pada komputer. Pilihan ini dipertimbangkan untuk mempermudah akses secara luring, sehingga tidak dibutuhkan koneksi internet untuk mengakses aplikasi. Selain itu, fitur kompilasi pada suatu \textit{peer} memerlukan akses \textit{system-call} yang tidak disediakan pada API peramban web~\citep{v8, spidermonkey}. Peramban web ditetapkan seperti ini untuk mencegah \textit{script} yang berpotensi menyerang sistem operasi komputer tidak dapat dijalankan secara langsung. Berikut ialah \textit{diagram activity} yang menunjukkan garis besar alur penggunaan aplikasi.
+Aplikasi PeerToCP didesain sebagai sebuah aplikasi \textit{desktop-based}, yang berarti dijalankan secara langsung pada komputer. Pilihan ini dipertimbangkan untuk mempermudah akses secara luring, sehingga tidak dibutuhkan koneksi internet untuk mengakses aplikasi. Selain itu, fitur kompilasi pada suatu \textit{peer} memerlukan akses \textit{system-call} yang tidak disediakan pada API peramban web~\citep{v8, spidermonkey}. Peramban web ditetapkan seperti ini untuk mencegah \textit{script} yang berpotensi menyerang sistem operasi komputer tidak dapat dijalankan secara langsung. \textit{Diagram activity} yang menunjukkan garis besar alur penggunaan aplikasi dapat dilihat pada gambar~\ref{fig:activity}.
 
 \begin{figure}
     \centering
