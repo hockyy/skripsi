@@ -2,7 +2,7 @@
 
 Terima kasih atas minat rekan-rekan untuk mengusulkan atau membuat templat LaTeX
 ini semakin baik, terutama ketika ada perubahan yang diperlukan atau ada
-pembaharuan aturan dari pihak Rektorat Universitas Indonesia terkait format
+pembaruan aturan dari pihak Rektorat Universitas Indonesia terkait format
 tugas akhir. Setiap orang dapat dengan bebas membuat _fork_ repositori ini.
 Setiap orang juga bebas mengajukan perubahan dengan mengubah templat ini pada
 repositori hasil _fork_ masing-masing, kemudian melakukan _merge request_ (MR)
