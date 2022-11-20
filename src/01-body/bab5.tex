@@ -42,9 +42,10 @@ Latensi dari teks editor secara khusus diukur secara terus-menerus pada skenario
 % \usepackage{multirow}
 \begin{table}[H]
  \centering
-  \caption{Statistik Latensi Operasi Nonlokal pada Skenario Ketiga (Teks Editor Bersama) dalam ms}
 
-\begin{tabular}{|c|rrr|rrr|rrr|}
+ \caption{Statistik Latensi Operasi Nonlokal pada Skenario Ketiga (Teks Editor Bersama) dalam ms}
+ \label{tab:latency-3}
+ \begin{tabular}{|c|rrr|rrr|rrr|}
 \hline
 \multirow{2}{*}{$n$} & \multicolumn{3}{c|}{\textbf{CRDT \textit{Peer-To-Peer}}} & \multicolumn{3}{c|}{\textbf{CRDT \textit{Client-Server}}} & \multicolumn{3}{c|}{\textbf{OT \textit{Client-Server}}} \\ \cline{2-10}
  & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Rerata} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Rerata} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} \\ \hline
@@ -52,7 +53,6 @@ Latensi dari teks editor secara khusus diukur secara terus-menerus pada skenario
 \textbf{4} & \multicolumn{1}{r|}{34.00} & \multicolumn{1}{r|}{30.00} & 223.00 & \multicolumn{1}{r|}{46.10} & \multicolumn{1}{r|}{42.00} & 220.00 & \multicolumn{1}{r|}{98.84} & \multicolumn{1}{r|}{86.00} & 1225.00 \\ \hline
 \textbf{8} & \multicolumn{1}{r|}{55.56} & \multicolumn{1}{r|}{47.00} & 313.00 & \multicolumn{1}{r|}{63.84} & \multicolumn{1}{r|}{56.00} & 308.00 & \multicolumn{1}{r|}{235.62} & \multicolumn{1}{r|}{151.00} & 2010.00 \\ \hline
 \end{tabular}
- \label{tab:latency-3}
 \end{table}
 
 Dari segi skalabilitasnya, dengan asumsi setiap pengguna berada pada jarak yang dekat, misalnya dalam eksperimen ini setiap \textit{peers} berada dalam satu zona yang sama, yaitu Indonesia. Arsitektur \textit{peer-to-peer} memberikan performa yang lebih optimal dibandingkan \textit{client-server} untuk jumlah $n$ tertentu. Berdasarkan perhitungan dan proyeksi jumlah pengguna yang bertambah, variasi dari CRDT \textit{client-server} dapat memberikan \textit{responsiveness} yang lebih baik untuk suatu nilai $n$ yang lebih tinggi atau saat \textit{peers} berada pada daerah yang lebih jauh antara satu dengan lainnya.
@@ -92,17 +92,17 @@ Selanjutnya, skenario empat menguji latensi \textit{shell} yang dapat digunakan 
 % \usepackage{multirow}
 \begin{table}[H]
  \centering
- \caption{Statistik Latensi Operasi Nonlokal pada Skenario Keempat (\textit{Shell} Bersama) dalam Satuan ms}
 
-\begin{tabular}{|c|rrr|rrr|rrr|}
-\hline
+ \caption{Statistik Latensi Operasi Nonlokal pada Skenario Keempat (\textit{Shell} Bersama) dalam Satuan ms}
+ \label{tab:latency-4}
+ \begin{tabular}{|c|rrr|rrr|rrr|}
+  \hline
 \multirow{2}{*}{$n$} & \multicolumn{3}{c|}{\textbf{CRDT \textit{Peer-To-Peer}}} & \multicolumn{3}{c|}{\textbf{CRDT \textit{Client-Server}}} & \multicolumn{3}{c|}{\textbf{OT \textit{Client-Server}}} \\ \cline{2-10}
  & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Rerata} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} & \multicolumn{1}{c|}{Mean} & \multicolumn{1}{c|}{Median} & \multicolumn{1}{c|}{Max} \\ \hline
 \textbf{2} & \multicolumn{1}{r|}{3.05} & \multicolumn{1}{r|}{3.00} & 5.00 & \multicolumn{1}{r|}{16.75} & \multicolumn{1}{r|}{17.00} & 19.00 & \multicolumn{1}{r|}{31.79} & \multicolumn{1}{r|}{30.00} & 170.00 \\ \hline
 \textbf{4} & \multicolumn{1}{r|}{3.13} & \multicolumn{1}{r|}{3.00} & 6.00 & \multicolumn{1}{r|}{16.55} & \multicolumn{1}{r|}{17.00} & 21.00 & \multicolumn{1}{r|}{44.47} & \multicolumn{1}{r|}{32.00} & 309.00 \\ \hline
 \textbf{8} & \multicolumn{1}{r|}{3.36} & \multicolumn{1}{r|}{3.00} & 19.00 & \multicolumn{1}{r|}{17.16} & \multicolumn{1}{r|}{17.00} & 35.00 & \multicolumn{1}{r|}{59.86} & \multicolumn{1}{r|}{30.33} & 551.00 \\ \hline
 \end{tabular}
- \label{tab:latency-4}
 \end{table}
 
 \begin{figure}
@@ -135,10 +135,11 @@ Aspek ini memaparkan seberapa besar \textit{resource} komputasi yang dibutuhkan 
 
 \begin{table}[H]
  \centering
- \caption{Statistik Rata-Rata Aktivitas dan \textit{Resource} Aplikasi Pengguna pada Skenario Pertama}
 
-\begin{tabular}{|cc|r|r|r|}
-\hline
+ \caption{Statistik Rata-Rata Aktivitas dan \textit{Resource} Aplikasi Pengguna pada Skenario Pertama}
+ \label{tab:resource-client-1}
+ \begin{tabular}{|cc|r|r|r|}
+  \hline
 \multicolumn{2}{|c|}{$n$} & \multicolumn{1}{c|}{\textbf{2}} & \multicolumn{1}{c|}{\textbf{4}} & \multicolumn{1}{c|}{\textbf{8}} \\ \hline
 \multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{CRDT \textit{Peer-To-Peer}}}} & CPU & 39.1964893 & 60.13947488 & 62.2870496 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & RAM & 16.57856816 & 19.24442935 & 21.30499303 \\ \cline{2-5}
@@ -153,7 +154,6 @@ Aspek ini memaparkan seberapa besar \textit{resource} komputasi yang dibutuhkan 
 \multicolumn{1}{|c|}{} & Net In & 62.24127487 & 99.81376692 & 87.42216719 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net Out & -12962.04576 & -28872.47276 & -18344.14905 \\ \hline
 \end{tabular}
- \label{tab:resource-client-1}
 \end{table}
 
 Tabel~\ref{tab:resource-client-1} memiliki parameter yang menunjukkan utilitasi CPU dalam satuan persen utilisasi. 100\% utilisasi berarti sistem menggunakan satu \textit{core} vCPU dengan penuh. Selanjutnya terdapat pula sumber daya atau resource RAM yang sudah dinormalisasi dalam satuan MiB, diikuti dengan kecepatan penerimaan dan pengiriman data dalam satuan \textit{kilobits} per detik. Penggunaan RAM dan penerimaan data pada variasi CRDT \textit{peer-to-peer} cenderung lebih tinggi untuk $n = 8$, hal ini disebabkan karena pada variasi ini, semakin banyak \textit{peers} pada jaringan, berarti semakin banyak pula replika dokumen yang harus disinkronisasi. Karena \textit{signalling server} pada variasi ini tidak berperan dalam transmisi data CRDT, sehingga setiap \textit{peers} bertanggung jawab untuk saling memberikan informasi satu sama lain dalam memastikan kesamaan informasi pada setiap replikanya. Dari segi banyaknya data yang masuk ke dalam aplikasi, CRDT memastikan bahwa data-data tersebut dapat digunakan secara langsung dan setiap data yang dikirimkan akan digunakan tanpa ada kasus penolakan \textit{update} seperti pada variasi OT. Sehingga dari segi transmisi data keluar, variasi CRDT dianggap lebih memenuhi aspek \textit{lightweight} dibandingkan variasi OT.
@@ -177,8 +177,10 @@ Variasi aplikasi CRDT \textit{client-server} secara relatif memberikan performa 
 Penggunaan memori sebelum dinormalisasi rata-rata dimulai dengan menggunakan sekitar 200 MiB, diikuti dengan pertumbuhan penggunaan seperti yang terlihat pada gambar grafik~\ref{fig:2-21}. Dari segi memori, kedua variasi CRDT memberikan pertumbuhan yang lebih optimal dibandingkan variasi OT. Namun, setiap variasinya menggunakan memori yang relatif kecil terhadap kapasitas penuh perangkat \textit{environment} pengujian, yakni hanya sekitar 15\%. Sistem operasi memiliki cara tersendiri dalam mengelola CPU dan RAM yang \textit{idle}. Selama aplikasi tidak menggunakan utilisasi penuh yang mengganggu jalannya aktivitas pengguna dalam berinteraksi dengan kompter, maka setiap variasi PeerToCP dianggap memenuhi aspek \textit{lightweight} dari segi utilisasi CPU dan RAM.
 
 \begin{table}[H]
- \centering
  \caption{Statistik Rata-Rata Aktivitas dan \textit{Resource Server} pada Skenario Pertama}
+ \label{tab:resource-server-1}
+
+ \centering
 
 \begin{tabular}{|cc|r|r|r|}
 \hline
@@ -196,7 +198,6 @@ Penggunaan memori sebelum dinormalisasi rata-rata dimulai dengan menggunakan sek
 \multicolumn{1}{|c|}{} & Net In & 52318.08 & 167768.04 & 308540.87 \\ \cline{2-5}
 \multicolumn{1}{|c|}{} & Net Out & -26494.76 & -84932.31 & -156178.28 \\ \hline
 \end{tabular}
- \label{tab:resource-server-1}
 \end{table}
 
 Aspek \textit{lightweight} lainnya yang perlu dipertimbangkan ialah penggunaan \textit{resource} atau sumber daya pada server yang dideskripsikan pada tabel~\ref{tab:resource-server-1}. Dalam eksperimen ini, server \textit{signalling} WebRTC pada CRDT \textit{peer-to-peer} menggunakan \textit{resource} RAM dan CPU yang sangat minim. Berbeda halnya dengan arsitektur \textit{client-server}, selain berperan dalam memelihara koneksi kelompok klien dalam suatu ruangan atau kelompok jaringan, server juga menjaga konsistensi replika pada setiap klien. Dalam beberapa referensi implementasi, penyimpanan dokumen pada arsitektur \textit{client-server} dapat ditambahkan basis data eksternal untuk dapat menampung lebih banyak dokumen pada suatu kelompok jaringan. Dalam eksperimen ini, basis data pada setiap variasi tidak menggunakan teknologi pihak ketiga dan hanya menggunakan struktur data bawaan sederhana pada server. Sementar pada arsitektur \textit{client-server}, persistensi dokumen dapat dilakukan dengan menyimpan dokumen pada penyimpanan lokal pada setiap \textit{peers}.
