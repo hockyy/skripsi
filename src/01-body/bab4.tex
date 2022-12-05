@@ -75,17 +75,24 @@ Perbedaan antara kedua implementasi arsitektur CRDT ini terdapat pada \textit{pr
 
 Untuk suatu dokumen yang hanya menyimpan teks biasa, operasi \textit{operational transformation} yang hanya memenuhi sifat TP 1 dapat diimplementasi dengan sederhana dalam arsitektur \textit{client-server}. Aplikasi PeerToCP dengan variasi ini menggunakan \textit{library} @codemirror/collab yang mengimplementasikan \textit{operational transformation} yang menyimpan operasi perubahan CodeMirror dalam bentuk \textit{delta}. Algoritma bekerja dengan menyimpan sebuah \textit{array} perubahan lokal yang belum diketahui oleh server. Perubahan-perubahan lokal beserta versi dokumen terbaru dari server yang sudah diaplikasikan di lokal akan dikirimkan secara berkala dengan mekanisme RPC \textit{over} WebSocket. Mekanisme RPC \textit{over} WebSocket pada dasarnya mengizinkan alur \textit{non-blocking} dalam menunggu balasan sebelum mengirimkan percobaan pengiriman perubahan lainnya. Apabila versi dasar dari server lebih baru daripada versi lokal, maka pengiriman perubahan akan ditolak, dan server akan memberikan respons kepada klien tersebut untuk melakukan \textit{rebase} atau menambahkan \textit{update} yang terdapat di server terlebih dahulu sebelum dapat mengirim percobaan pengiriman kembali.
 
-Perubahan \textit{remote} yang diterima dari server akan ditransformasikan satu sama lain dengan perubahan lokal yang belum diketahui oleh server. Perubahan lokal kemudian akan ditimpa dengan perubahan yang sudah ditransformasikan dengan perubahan \textit{remote}. Percobaan pengiriman yang dikirim selanjutnya akan mengikuti perubahan yang sudah ditransformasikan ini. \textit{Operational transformation} hanya terjadi di lokal dan perubahan akan diperbarui secara berurutan, sehingga setiap dokumen dalam jaringan memiliki replika yang berujung identik dan konvergen.
-
-
 \begin{figure}
     \centering
-    \includegraphics[scale=0.65]{assets/skripsi/Arsitektur_WebSocket_OT}
+    \includegraphics[width=11cm]{assets/skripsi/Arsitektur_WebSocket_OT}
     \caption{Arsitektur yang Menggunakan WebSocket dan \textit{Operational Transformation}}
     \label{fig:websocket_ot}
 \end{figure}
 
-PeerToCP dengan variasi \textit{operational transformation} ini diilustrasikan pada gambar~\ref{fig:websocket_ot}. Pada kasus ini, Server tidak dapat menerima dua \textit{pending update} milik klien A sebelum ia memiliki semua versi terbaru dari server. Setelah melakukan \textit{pull update} dan menerima tiga operasi perubahan dari server, klien A akan mentransformasikan dua \textit{pending update}-nya dengan suatu algoritma \textit{operational transformation} terhadap tiga operasi baru ini. Kemudian klien A memperbaharui versi dokumen lokalnya menjadi versi 4, dan dapat mengirimkan \textit{update}-nya. Server selanjutnya akan menambahkan dua operasi dari klien A tersebut serta menjadikan server memiliki versi 6.
+Perubahan \textit{remote} yang diterima dari server akan ditransformasikan satu sama lain dengan perubahan lokal yang belum diketahui oleh server. Perubahan lokal kemudian akan ditimpa dengan perubahan yang sudah ditransformasikan dengan perubahan \textit{remote}. Percobaan pengiriman yang dikirim selanjutnya akan mengikuti perubahan yang sudah ditransformasikan ini. \textit{Operational transformation} hanya terjadi di lokal dan perubahan akan diperbarui secara berurutan, sehingga setiap dokumen dalam jaringan memiliki replika yang berujung identik dan konvergen. Ilustrasi arsitektur ini ditunjukkan pada gambar~\ref{fig:websocket_ot}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=7cm]{assets/skripsi/ot1}
+    \includegraphics[width=7cm]{assets/skripsi/ot2}
+    \caption{Ilustrasi Sinkronisasi pada Variasi \textit{Operational Transformation}}
+    \label{fig:ots}
+\end{figure}
+
+Pembaharuan dan proses sinkronisasi PeerToCP dengan variasi \textit{operational transformation} ini diilustrasikan pada gambar~\ref{fig:ots}. Pada kasus ini, server tidak dapat menerima dua \textit{pending update} milik klien A sebelum ia memiliki semua versi terbaru dari server. Setelah melakukan \textit{pull update} dan menerima tiga operasi perubahan dari server, klien A akan mentransformasikan dua \textit{pending update}-nya dengan suatu algoritma \textit{operational transformation} terhadap tiga operasi baru ini. Kemudian klien A memperbaharui versi dokumen lokalnya menjadi versi 4, dan dapat mengirimkan \textit{update}-nya. Server selanjutnya akan menambahkan dua operasi dari klien A tersebut serta menjadikan server memiliki versi 6.
 
 Hal yang serupa diterapkan juga untuk \textit{shell} program yang berjalan. Saat suatu klien memberikan \textit{keystroke} pada salah satu \textit{shell} yang aktif, \textit{keystroke} akan dikirimkan melalui mekanisme yang serupa, namun akan diarahkan ke klien yang menjadi \textit{host} atau menjalankan programnya. Selanjutnya, perubahan \textit{shell} akan dikirimkan berkala pada server selama ada perubahan yang belum diterima atau diketahui server. Saat terjadi perubahan, server akan melakukan pengumuman kepada setiap klien untuk melakukan \textit{pull}. Karena respons \textit{shell} bergantung pada klien \textit{host}, maka pembaharuan tidak perlu diterapkan fungsi transformasi seperti pada OT teks biasa. Salah satu aspek lainnya ialah \textit{position mapping} yang tidak perlu ditangani karena kursor akan selalu berada di sebelah kanan karakter terakhir. Operasi seperti mekanisme \textit{update} yang dilaksanakan secara serial ini diterapkan untuk mencegah terjadinya \textit{race condition} pada saat gangguan jaringan.
 
