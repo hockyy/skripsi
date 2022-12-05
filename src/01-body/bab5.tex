@@ -214,14 +214,22 @@ Aspek \textit{lightweight} lainnya yang perlu dipertimbangkan ialah penggunaan \
  \includegraphics[width=4.08cm]{./assets/skripsi/crdt1}
  \includegraphics[width=4.8cm]{./assets/skripsi/crdt2}
  \includegraphics[width=4.8cm]{./assets/skripsi/crdt3}
- \caption{Ilustrasi Variasi CRDT dengan Arsitektur \textit{Peer-To-Peer}}
- \label{fig:compare}
+ \caption{Ilustrasi Sinkronisasi PeerToCP Variasi CRDT Berbasis \textit{Peer-To-Peer}}
+ \label{fig:syncCRDT}
 \end{figure}
 
 Implementasi CRDT pada library Yjs menggunakan \textit{logical timestamp} berupa \textit{state vector} yang mencatat versi dari setiap pengguna dalam sebuah jaringan. Saat dua buah pengguna saling bersinkronisasi, hanya perbedaan antara dua buah versi yang didapat dari \textit{state vector} tersebut yang akan dikirimkan. Dalam beberapa kasus, bila perubahan dokumen terlalu berbeda, seluruh konten dokumen secara langsung dapat dikirimkan untuk menghemat ukuran. Perubahan dokumen dari \textit{state vector} ini bersifat komutatif dan idempoten, yang berarti perubahan yang sama dapat diterapkan berulang kali dan dengan urutan sembarang tanpa mengubah sifat konvergensi dokumen. Karena adanya sifat dari CRDT ini, pengiriman data kepada setiap klien pada CRDT tidak dipengaruhi banyaknya operasi yang dilakukan, melainkan cenderung dipengauruhi ukuran perubahan dokumen yang terjadi saat sinkronisasi dilakukan.
 
-Pada gambar ilustrasi~\ref{fig:compare}, apabila klien A melakukan sinkronisasi dengan klien B terlebih dahulu, kemudian diikuti dengan sinkronisasi klien A dengan klien C dan sinkronisasi klien B dengan klien C, maka klien C hanya perlu memberikan perbedaan yang belum didapatnya dari klien A. Secara khusus, apabila terdapat operasi penghapusan pada objek di struktur data yang belum disinkronisasi, konten objek tersebut tidak perlu dipropagasi. Kasus ini merupakan salah satu optimisasi Yjs yang dapat mengurangi total \textit{bandwidth} yang perlu ditransmisikan antar pengguna pada variasi CRDT.
+Pada gambar ilustrasi~\ref{fig:syncCRDT}, apabila klien A melakukan sinkronisasi dengan klien B terlebih dahulu, kemudian diikuti dengan sinkronisasi klien A dengan klien C dan sinkronisasi klien B dengan klien C, maka klien C hanya perlu memberikan perbedaan yang belum didapatnya dari klien A. Secara khusus, apabila terdapat operasi penghapusan pada objek di struktur data yang belum disinkronisasi, konten objek tersebut tidak perlu dipropagasi. Kasus ini merupakan salah satu optimisasi Yjs yang dapat mengurangi total \textit{bandwidth} yang perlu ditransmisikan antar pengguna pada variasi CRDT.
 
 Dalam beberapa referensi implementasi, penyimpanan dokumen pada arsitektur \textit{client-server} dapat ditambahkan juga dengan basis data eksternal untuk dapat menampung lebih banyak dokumen pada suatu kelompok jaringan. Dalam eksperimen ini, basis data pada setiap variasi tidak menggunakan teknologi pihak ketiga dan hanya menggunakan struktur data bawaan sederhana pada server. Sementara pada arsitektur \textit{client-server}, persistensi dokumen dapat dilakukan dengan menyimpan dokumen pada penyimpanan lokal pada setiap \textit{peers}.
 
-\textit{Drawback} dari transmisi rendah pada aplikasi pengguna CRDT \textit{client-server} ialah transmisi yang lebih tinggi dari sisi server. Variasi OT memiliki muatan jaringan paling besar dibandingkan dengan variasi lain yang memengaruhi utilisasi CPU dan RAM-nya. \textit{Resource} ini disesuaikan untuk menangani permintaan data masuk dan keluar yang cenderung lebih banyak. Dari aspek \textit{lightweight}, arsitektur \textit{client-server} pada OT tidak dipreferensi penggunaannya dan membutuhkan tinjauan kembali untuk dioptimisasi protokol pengiriman datanya, atau pemanfaatan variasi algoritma OT yang lebih kompleks dan optimal untuk dapat menangani skenario muatan di atas rata-rata seperti skenario pertama.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=15cm]{./assets/skripsi/Compare}
+ \caption{Ilustrasi Perbandingan Arsitektur \textit{Peer-To-Peer} dan \textit{Client-Server} Secara Berurutan}
+ \label{fig:compare}
+\end{figure}
+
+\textit{Drawback} dari transmisi rendah pada aplikasi pengguna CRDT \textit{client-server} ialah transmisi yang lebih tinggi dari sisi server. Gambar~\ref{fig:compare} menunjukkan bahwa banyaknya koneksi kanal data pada \textit{peer-to-peer} tumbuh secara kuadratik. Total transmisi yang harus ditanggung oleh sebuah \textit{peer} pada arsitektur ini secara matematis akan bertumbuh lebih cepat terhadap jumlah pengguna pada suatu kelompok jaringan. Selain itu, bila dilihat dari algoritma resolusinya, variasi OT memiliki muatan jaringan paling besar dibandingkan dengan variasi lain yang memengaruhi utilisasi CPU dan RAM-nya. \textit{Resource} ini dipengaruhi oleh permintaan data masuk dan keluar yang cenderung lebih banyak. Dari aspek \textit{lightweight}, arsitektur \textit{client-server} pada OT tidak dipreferensi penggunaannya dan membutuhkan tinjauan kembali untuk dioptimisasi protokol pengiriman datanya. Selain itu, pemanfaatan variasi algoritma OT yang lebih kompleks dan optimal untuk dapat diteliti lebih lanjut untuk dapat menangani skenario perubahan intensif seperti skenario pertama.
